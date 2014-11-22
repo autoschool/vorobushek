@@ -46,4 +46,12 @@ public class Post extends Model {
     public int getCommentsCount(){
         return this.getAll(Comment.class).size();
     }
+
+    public void setUser(User user){
+        this.setParent(user);
+    }
+
+    public User getUser(){
+        return this.parent(User.class);
+    }
 }

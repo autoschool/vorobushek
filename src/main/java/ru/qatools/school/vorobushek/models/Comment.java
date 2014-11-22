@@ -14,4 +14,12 @@ public class Comment extends Model {
     public void setBody(String body) {
         setString("body", body);
     }
+
+    public void setUser(User user){
+        this.setParent(user);
+    }
+
+    public User getUser(){
+        return this.parent(User.class);
+    }
 }

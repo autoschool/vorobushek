@@ -16,7 +16,9 @@
                             Comments
                         </li>
                         <#list model.comments as comment>
-                            <li class="list-group-item">${comment.body}</li>
+
+                            <li class="list-group-item">${comment.body} by ${comment.user.displayName}</li>
+
                         </#list>
                     </ul>
 
