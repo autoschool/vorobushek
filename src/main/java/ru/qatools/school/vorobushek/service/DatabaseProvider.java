@@ -3,11 +3,9 @@ package ru.qatools.school.vorobushek.service;
 import com.squareup.okhttp.*;
 import org.flywaydb.core.Flyway;
 import org.javalite.activejdbc.Base;
-<<<<<<< HEAD
-=======
+
 import org.javalite.activejdbc.LazyList;
 
->>>>>>> dev
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;

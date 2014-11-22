@@ -2,20 +2,11 @@ package ru.qatools.school.vorobushek.resources;
 
 import org.glassfish.jersey.server.mvc.ErrorTemplate;
 import org.glassfish.jersey.server.mvc.Template;
-<<<<<<< HEAD
 import ru.qatools.school.vorobushek.models.Comment;
 import ru.qatools.school.vorobushek.models.Post;
-
-=======
-
 import org.json.JSONException;
-import ru.qatools.school.vorobushek.models.Comment;
-import ru.qatools.school.vorobushek.models.Post;
 
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
-
->>>>>>> dev
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
