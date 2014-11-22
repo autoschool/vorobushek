@@ -9,7 +9,9 @@
         <#list model as post>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="/post/${post.id}">${post.title}</a> at ${post.createdAt} <span class="badge">${post.getCommentsCount()}</span> <br/>
+
+                    <a href="/post/${post.id}">${post.title}</a> at ${post.createdAt} by ${post.user.displayName} <span class="badge">${post.getCommentsCount()}</span> <br/>
+
                 </div>
             </div>
         </#list>

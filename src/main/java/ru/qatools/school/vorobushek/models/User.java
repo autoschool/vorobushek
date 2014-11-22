@@ -1,32 +1,37 @@
 package ru.qatools.school.vorobushek.models;
 
-
 import java.security.Principal;
+import org.javalite.activejdbc.Model;
+
 
 /**
  * Created by yurik on 19.11.14.
  */
-public class User implements Principal {
-
-    private String login;
-
-    private String email;
-
-    private String displayName;
 
 
-    public User(String login, String email, String displayName){
-        this.login = login;
-        this.email = email;
-        this.displayName = displayName;
+public class User extends Model {
+
+    public String getLogin() {
+        return getString("login");
     }
 
-    public String getEmail(){ return email; }
-    public String getLogin(){ return login; }
-    public String getDisplayName(){ return displayName; }
+    public void setLogin(String login) {
+        setString("login", login);
+    }
 
-    @Override
-    public String getName() {
-        return displayName;
+    public String getEmail() {
+        return getString("email");
+    }
+
+    public void setEmail(String email) {
+        setString("email", email);
+    }
+
+    public String getDisplayName() {
+        return getString("displayName");
+    }
+
+    public void setDisplayName(String displayName) {
+        setString("displayName", displayName);
     }
 }
