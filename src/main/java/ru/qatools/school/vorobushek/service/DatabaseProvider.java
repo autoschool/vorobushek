@@ -33,38 +33,29 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public static final String YANDEX_CLIEND_ID;
     public static final String YANDEX_CLIEND_SECRET;
 
+    private static String dbUrl;
 
     private static final String DBUSER = "sa";
-    private final static Logger logger = LoggerFactory.getLogger(DatabaseProvider.class);
-    private static String dbUrl;
-    private final static String USER_CONTEXT_ATTRIBUTE_NAME;
-
+    private static final String USER_CONTEXT_ATTRIBUTE_NAME;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseProvider.class);
+    private static final String YANDEX_TOKEM_URL;
 
     static {
         try {
             dbUrl = format("jdbc:h2:file:%s/%s,user=%s", getDbPath(), getDbName(), DBUSER);
-            logger.info(format("Starting embedded database with url '%s' ...", dbUrl));
+            LOGGER.info(format("Starting embedded database with url '%s' ...", dbUrl));
             openConnection();
             Flyway flyway = new Flyway();
             flyway.setDataSource(dbUrl, DBUSER, null);
             flyway.migrate();
         } catch (Exception e) {
-            logger.error("Failed to start embedded database", e);
+            LOGGER.error("Failed to start embedded database", e);
         }
         
         YANDEX_CLIEND_ID = "17c735ef06644350b6b9fabc0ae467ed";
         YANDEX_CLIEND_SECRET = "91928eb427e54e84a09d57b7f7eeda89";
+        YANDEX_TOKEM_URL = "http://oauth.yandex.ru/token";
         USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
-    }
-
-    public static void openConnection() {
-        if (!Base.hasConnection()) {
-            Base.open(org.h2.Driver.class.getName(), dbUrl, DBUSER, "");
-        }
-    }
-
-    public static Logger getLogger(){
-        return logger;
     }
 
     private static String getDbName() {
@@ -80,113 +71,104 @@ public class DatabaseProvider implements ContainerRequestFilter {
         return (value == null) ? defaultValue : value;
     }
 
+    private static String getJsonAttribute(String jsonMessage, String attributeName){
+
+        JSONObject responseJson = null;
+
+        try { responseJson = new JSONObject(jsonMessage); }
+        catch (JSONException e) { getLogger().error(e.getMessage()); }
+
+        if (responseJson == null) return  "";
+
+
+        String attribute = null;
+
+        try {
+            if (responseJson.has(attributeName))
+                attribute = responseJson.getString(attributeName);
+        }
+        catch (JSONException e) { getLogger().error(e.getMessage()); }
+
+        return attribute;
+
+    }
+
+    private static String executeRequest(Request request){
+
+        OkHttpClient client = new OkHttpClient();
+        Call call = client.newCall(request);
+
+        Response response = null;
+
+        try{ response = call.execute(); }
+        catch (IOException e) { getLogger().error(e.getMessage()); }
+
+        if (response == null) return "";
+
+        String responseString = "";
+
+        try { responseString = response.body().string(); }
+        catch (IOException e) { getLogger().error(e.getMessage()); }
+
+        return responseString;
+    }
+
+    public static void openConnection() {
+        if (!Base.hasConnection()) {
+            Base.open(org.h2.Driver.class.getName(), dbUrl, DBUSER, "");
+        }
+    }
+
+    public static Logger getLogger(){
+        return LOGGER;
+    }
+
     public static String getYandexToken(String responseCode){
 
         MediaType bodyTypeForToken = MediaType.parse("application/x-www-form-urlencoded");
 
-        String bodyTextForToken ="grant_type=authorization_code" +
-                "&code=" + responseCode +
-                "&client_id=" + DatabaseProvider.YANDEX_CLIEND_ID +
-                "&client_secret=" + DatabaseProvider.YANDEX_CLIEND_SECRET;
+        String bodyTextForToken = String.format("grant_type=authorization_code&code=%s&client_id=%s&client_secret=%s"
+                , responseCode
+                , YANDEX_CLIEND_ID
+                , YANDEX_CLIEND_SECRET);
 
-        OkHttpClient client = new OkHttpClient();
         RequestBody bodyForToken = RequestBody.create(bodyTypeForToken, bodyTextForToken);
         Request requestForToken = new Request.Builder()
-                .url("http://oauth.yandex.ru/token")
+                .url(YANDEX_TOKEM_URL)
                 .post(bodyForToken)
                 .build();
 
-        Response responseForToken = null;
+        String responseForTokenString = executeRequest(requestForToken);
 
-        try{ responseForToken = client.newCall(requestForToken).execute(); }
-        catch (IOException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-        if (responseForToken == null) return null;
-
-
-        String responseForTokenString = null;
-
-        try { responseForTokenString = responseForToken.body().string(); }
-        catch (IOException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-
-        JSONObject responseJson = null;
-
-        try { responseJson = new JSONObject(responseForTokenString); }
-        catch (JSONException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-        if (responseJson == null) return  null;
-
-
-        String accessToken = null;
-
-        try { accessToken = responseJson.getString("access_token"); }
-        catch (JSONException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-        return accessToken;
+        return getJsonAttribute(responseForTokenString, "access_token");
     }
 
     public static User getYandexUser(String access_token) {
 
-        if (access_token == null || access_token.isEmpty()) return  null;
+        String url = String.format("https://login.yandex.ru/info?format=json&oauth_token=%s", access_token);
 
-        String url = "https://login.yandex.ru/info?" +
-                "format=json" +
-                "&oauth_token="+access_token;
-
-        OkHttpClient client = new OkHttpClient();
         Request requestPassport = new Request.Builder()
                 .url(url)
                 .build();
 
-        Response responsePassport = null;
+        String passportJsonString = executeRequest(requestPassport);
 
-        try{responsePassport = client.newCall(requestPassport).execute();}
-        catch (IOException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
+        String login = getJsonAttribute(passportJsonString, "login");
+        String email = getJsonAttribute(passportJsonString, "default_email");
+        String displayName = getJsonAttribute(passportJsonString, "display_name");
 
-        if (responsePassport == null) return null;
-
-
-        String passportJsonString = null;
-
-        try { passportJsonString = responsePassport.body().string(); }
-        catch (IOException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-        if (passportJsonString == null) return null;
-
-
-        JSONObject passportJson = null;
-
-        try { passportJson = new JSONObject(passportJsonString); }
-        catch (JSONException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-        if (passportJson == null) return null;
-
-
-        String login = null;
-        String email = null;
-        String displayName = null;
-
-        try{
-            login = passportJson.getString("login");
-            email = passportJson.getString("default_email");
-            displayName = passportJson.getString("display_name");
-        }
-        catch (JSONException e) { DatabaseProvider.getLogger().info(e.getMessage()); }
-
-        if (login == null || email == null || displayName == null) return null;
+        if (login.isEmpty() || email.isEmpty() || displayName.isEmpty()) return null;
 
         LazyList<User> users = User.findBySQL(format("select * from users where login='%s' and email='%s' and displayName='%s'", login, email, displayName));
-        if (users.isEmpty()){
-            User user = new User();
-            user.setLogin(login);
-            user.setEmail(email);
-            user.setDisplayName(displayName);
-            user.saveIt();
-            return user;
-        }
+        if (!users.isEmpty())
+            return users.get(0);
 
-        return users.get(0);
+        User user = new User();
+        user.setLogin(login);
+        user.setEmail(email);
+        user.setDisplayName(displayName);
+        user.saveIt();
+        return user;
 
     }
 

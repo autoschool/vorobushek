@@ -6,16 +6,14 @@ import javax.ws.rs.NotAuthorizedException;
 import java.util.List;
 
 /**
- * Created by yurik on 22.11.14.
+ * Created by yurik
+ * 22.11.14.
  */
 public class UserContext {
 
     private User currentUser;
 
     private Post lastPost;
-    private Comment lastComment;
-
-
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
@@ -46,7 +44,8 @@ public class UserContext {
 
     public Post createPost(String postTitle, String postBody) {
 
-        if (currentUser == null)  throw new NotAuthorizedException("You Don't Have Permission");
+        if (currentUser == null)
+            throw new NotAuthorizedException("You Don't Have Permission");
 
         Post post = new Post();
         post.setTitle(postTitle);
@@ -61,7 +60,8 @@ public class UserContext {
 
     public Post addCommentToPost(String commentBody, String postId){
 
-        if (currentUser == null) throw new NotAuthorizedException("You Don't Have Permission");
+        if (currentUser == null)
+            throw new NotAuthorizedException("You Don't Have Permission");
 
         Post post = Post.findById(postId);
 
@@ -71,8 +71,6 @@ public class UserContext {
             comment.setParent(post);
             comment.setUser(currentUser);
             comment.saveIt();
-
-            lastComment = comment;
         }
 
         return post;
@@ -80,6 +78,12 @@ public class UserContext {
 
     public static List<Post> getPosts(){
         return Post.findAll();
+    }
+
+    public String getUserUrl(){
+        return currentUser == null
+               ? "https://oauth.yandex.ru/authorize?response_type=code&client_id=" + DatabaseProvider.YANDEX_CLIEND_ID
+               : "https://passport.yandex.ru/passport?mode=passport";
     }
 
 }

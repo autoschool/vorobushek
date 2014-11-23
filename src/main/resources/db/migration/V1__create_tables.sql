@@ -24,5 +24,3 @@ CREATE TABLE users (
   displayName  VARCHAR(1000000) NOT NULL
 );
 
-INSERT  INTO  users (email, login, displayName) VALUES ('','','Guest')
-

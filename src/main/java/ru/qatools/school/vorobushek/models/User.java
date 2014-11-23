@@ -2,9 +2,9 @@ package ru.qatools.school.vorobushek.models;
 
 import org.javalite.activejdbc.Model;
 
-
 /**
- * Created by yurik on 19.11.14.
+ * Created by yurik
+ * 19.11.14.
  */
 
 

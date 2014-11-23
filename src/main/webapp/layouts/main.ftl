@@ -1,4 +1,4 @@
-<#macro layout title="Switter" userName="">
+<#macro layout title="Switter" userName="" yandexLoginUrl="">
 <html>
 <head>
     <script src="/public/jquery/js/jquery.min.js" type="text/javascript"></script>
@@ -21,23 +21,19 @@
             <ul class="nav navbar-nav navbar-right">
                 <#if userName?has_content>
                     <form class="navbar-form navbar-left" method="Post" action="/logout">
-                        <h3><span class="label label-success">${userName}</span></h3>
+                        <a href=${yandexLoginUrl}><h3><span class="label label-success">${userName}</span></h3></a>
                         <button type="submit" class="btn btn-danger">Logout</button>
                     </form>
-
                 <#else>
-                    <a href="https://oauth.yandex.ru/authorize?response_type=code&client_id=17c735ef06644350b6b9fabc0ae467ed">Sign in as yandex user</a>
+                    <a href=${yandexLoginUrl}>Login as yandex user</a>
                 </#if>
             </ul>
-
-
         </div>
     </nav>
     <nav class="navbar navbar-menu navbar-fixed-top" role="navigation">
         <div class="container">
             <ul class="nav navbar-nav">
                 <li><a href="/">All Posts</a></li>
-
             </ul>
             <form class="navbar-form navbar-left" method="GET" action="/post/new">
                 <button type="submit" class="btn btn-default">Create</button>

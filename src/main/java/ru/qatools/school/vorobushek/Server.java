@@ -16,8 +16,6 @@ import javax.ws.rs.core.FeatureContext;
  */
 public class Server extends ResourceConfig {
 
-    private static final long DEFAULT_TIMEOUT = 30;
-
     public Server() {
         register(FreemarkerMvcFeature.class);
 
@@ -29,7 +27,6 @@ public class Server extends ResourceConfig {
         });
 
         packages(Server.class.getPackage().getName());
-
 
     }
 

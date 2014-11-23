@@ -9,6 +9,7 @@ import java.util.List;
  * eroshenkoam
  * 15/11/14
  */
+
 public class Post extends Model {
 
     public String getTitle() {
@@ -25,10 +26,6 @@ public class Post extends Model {
 
     public void setBody(String body) {
         setString("body", body);
-    }
-
-    public Timestamp getUpdatedAt() {
-        return getTimestamp("updated_at");
     }
 
     public Timestamp getCreatedAt() {

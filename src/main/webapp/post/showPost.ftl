@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="model" type="ru.qatools.school.vorobushek.models.UserContext" -->
 <#import "../layouts/main.ftl" as layout />
-<@layout.layout title="Blog: posts" userName=model.getCurrentUserString()>
+<@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
     <div class="col-md-12">
     <div class="page-header">
@@ -16,13 +16,9 @@
                 Comments
             </li>
             <#list model.lastPost.comments as comment>
-
                 <li class="list-group-item">${comment.body} by ${comment.user.displayName}</li>
-
             </#list>
         </ul>
-
-
         <#if model.hasUser()>
             <form class="form" role="form" action="/post/${model.lastPost.id}/addComment" method="post">
                 <div class="form-group">

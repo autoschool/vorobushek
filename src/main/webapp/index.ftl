@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="model" type="ru.qatools.school.vorobushek.models.UserContext" -->
 <#import "layouts/main.ftl" as layout />
-<@layout.layout title="Blog: posts" userName=model.getCurrentUserString()>
+<@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
     <div class="col-md-12">
         <div class="page-header">
