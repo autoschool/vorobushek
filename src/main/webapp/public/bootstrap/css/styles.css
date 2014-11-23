@@ -12,8 +12,6 @@ a {
   color:#222222;
 }
 
-body { padding-top: 40px; }
-
 .wrapper, .row {
    height: 100%;
    margin-left:0;
@@ -41,42 +39,8 @@ body { padding-top: 40px; }
     padding: 20px;
 }
 
-.divider {
-    margin-top:32px;
-}
-
-#main {
-    background-color:#fefefe;
-}
-
-#sidebar, #sidebar a {
-    color:#ffffff;
-    background-color:transparent;
-    text-shadow:1px 0 1px #888888;
-}
-#sidebar a.logo {
-  display:block;
-  padding:3px;
-  height:80px;
-  width:100px;
-  margin-top:30px;
-}
-#sidebar-footer {
-  position:absolute;bottom:5px;
-}
-#footer {
-  margin-bottom:20px;
-}
-
-.navbar-menu {
-    background: none repeat scroll 0% 0% #F8F8F8;
-}
-
-.navbar-nav > li > a {position:relative; padding-top:10px !important; padding-bottom:10px !important;}
-.navbar {min-height:30px !important}
-
 .box {
-    bottom: 0; /* increase for footer use */
+  	bottom: 0; /* increase for footer use */
     left: 0;
     position: absolute;
     right: 0;
@@ -86,13 +50,51 @@ body { padding-top: 40px; }
     background-attachment:fixed;
 }
 
+.divider {
+	margin-top:32px;
+}
+
+#main {
+    background-color:#fefefe;
+}
+#main .img-circle {
+  margin-top:18px;
+  height:70px;
+  width:70px;
+}
+
+#sidebar, #sidebar a {
+    color:#ffffff;
+    background-color:transparent;
+	text-shadow:1px 0 1px #888888;
+}
+#sidebar a.logo {
+  display:block;
+  padding:3px;
+  background-color:#fff;
+  color:#777777;
+  height:40px;
+  width:40px;
+  margin:15px;
+  font-size:26px;
+  font-weight:700;
+  text-align:center;
+  text-decoration:none;
+  text-shadow:0 0 0;
+}
+#sidebar-footer {
+  position:absolute;bottom:5px;
+}
+#footer {
+  margin-bottom:20px;
+}
 
 /* center and adjust the sidebar contents on smaller devices */
 @media (max-width: 768px) {
   #sidebar,#sidebar a.logo {
     text-align:center;
     margin:0 auto;
-    margin-top:80px;
+    margin-top:30px;
     font-size:26px;
   }
   #sidebar a.logo {
@@ -113,16 +115,19 @@ h1,h2,h3 {
    font-family:'Open Sans',arial,sans-serif;
 }
 
-p {
-    font-weight: 800;
-    font-family:'Open Sans',arial,sans-serif;
-}
-
 .jumbotron {
   background-color:transparent;
 }
 .label-default {
   background-color:#dddddd;
+}
+.page-header {
+  margin-top: 55px;
+  padding-top: 9px;
+  border-top:1px solid #eeeeee;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:2px;
 }
 
 .col-sm-9.full {
