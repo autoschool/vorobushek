@@ -73,21 +73,29 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     private static String getJsonAttribute(String jsonMessage, String attributeName){
 
+        String attribute = "";
+
         JSONObject responseJson = null;
 
-        try { responseJson = new JSONObject(jsonMessage); }
-        catch (JSONException e) { getLogger().error(e.getMessage()); }
+        try {
+            responseJson = new JSONObject(jsonMessage);
+        }
+        catch (JSONException e) {
+            getLogger().error(e.getMessage());
+        }
 
-        if (responseJson == null) return  "";
-
-
-        String attribute = null;
+        if (responseJson == null) {
+            return  attribute;
+        }
 
         try {
-            if (responseJson.has(attributeName))
+            if (responseJson.has(attributeName)){
                 attribute = responseJson.getString(attributeName);
+            }
         }
-        catch (JSONException e) { getLogger().error(e.getMessage()); }
+        catch (JSONException e) {
+            getLogger().error(e.getMessage());
+        }
 
         return attribute;
 
@@ -95,20 +103,30 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     private static String executeRequest(Request request){
 
+        String responseString = "";
+
         OkHttpClient client = new OkHttpClient();
         Call call = client.newCall(request);
 
         Response response = null;
 
-        try{ response = call.execute(); }
-        catch (IOException e) { getLogger().error(e.getMessage()); }
+        try{
+            response = call.execute();
+        }
+        catch (IOException e) {
+            getLogger().error(e.getMessage());
+        }
 
-        if (response == null) return "";
+        if (response == null){
+            return responseString;
+        }
 
-        String responseString = "";
-
-        try { responseString = response.body().string(); }
-        catch (IOException e) { getLogger().error(e.getMessage()); }
+        try {
+            responseString = response.body().string();
+        }
+        catch (IOException e) {
+            getLogger().error(e.getMessage());
+        }
 
         return responseString;
     }
@@ -157,11 +175,15 @@ public class DatabaseProvider implements ContainerRequestFilter {
         String email = getJsonAttribute(passportJsonString, "default_email");
         String displayName = getJsonAttribute(passportJsonString, "display_name");
 
-        if (login.isEmpty() || email.isEmpty() || displayName.isEmpty()) return null;
+        if (login.isEmpty() || email.isEmpty() || displayName.isEmpty()) {
+            return null;
+        }
 
         LazyList<User> users = User.findBySQL(format("select * from users where login='%s' and email='%s' and displayName='%s'", login, email, displayName));
-        if (!users.isEmpty())
+
+        if (!users.isEmpty()){
             return users.get(0);
+        }
 
         User user = new User();
         user.setLogin(login);

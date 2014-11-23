@@ -44,8 +44,9 @@ public class UserContext {
 
     public Post createPost(String postTitle, String postBody) {
 
-        if (currentUser == null)
+        if (currentUser == null){
             throw new NotAuthorizedException("You Don't Have Permission");
+        }
 
         Post post = new Post();
         post.setTitle(postTitle);
@@ -60,8 +61,9 @@ public class UserContext {
 
     public Post addCommentToPost(String commentBody, String postId){
 
-        if (currentUser == null)
+        if (currentUser == null){
             throw new NotAuthorizedException("You Don't Have Permission");
+        }
 
         Post post = Post.findById(postId);
 
