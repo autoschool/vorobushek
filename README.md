@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/autoschool/vorobushek/master/src/main/webapp/public/app/img/sparow-48x28.png) Vorobushek
+# ![](https://raw.githubusercontent.com/autoschool/vorobushek/master/src/main/webapp/public/app/img/logo_sparow.png) Vorobushek
 
 
 ### Run application

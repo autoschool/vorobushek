@@ -49,7 +49,7 @@ public class IndexResource {
 
     }
 
-    @POST
+    @GET
     @Path("/logout")
     public Response logout() {
         DatabaseProvider.setUserContext(httpRequest, new UserContext());
