@@ -2,14 +2,15 @@ package ru.qatools.school.vorobushek.resources;
 
 import org.glassfish.jersey.server.mvc.ErrorTemplate;
 import org.glassfish.jersey.server.mvc.Template;
-import ru.qatools.school.vorobushek.models.Comment;
-import ru.qatools.school.vorobushek.models.Post;
-import org.json.JSONException;
+import ru.qatools.school.vorobushek.models.*;
 
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
+
 
 /**
  * eroshenkoam
@@ -20,34 +21,41 @@ import java.io.IOException;
 @ErrorTemplate(name = "/error.ftl")
 public class PostResources {
 
+    @Context
+    HttpServletRequest httpRequest;
+
     @GET
     @Path("/{id}")
     @Template(name = "/post/showPost.ftl")
-    public Post showPost(@PathParam("id") int id) {
-        return Post.findById(id);
+    public UserContext showPost(@PathParam("id") String id) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+        userContext.setLastPost(id);
+
+        return userContext;
     }
 
     @GET
     @Path("/new")
     @Template(name = "/post/newPost.ftl")
-    public Post newPost() {
-        return new Post();
+    public UserContext newPost() {
+        return DatabaseProvider.getUserContext(httpRequest);
     }
 
     @POST
     @Path("/")
     @Template(name = "/post/showPost.ftl")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Post createPost(@FormParam("title") String title,
-                           @FormParam("body") String body,
-                           @CookieParam("token") String token) throws IOException, JSONException {
+    public UserContext createPost(@FormParam("title") String title,
+                           @FormParam("body") String body) {
 
-        Post post = new Post();
-        post.setTitle(title);
-        post.setBody(body);
-        post.setUser(DatabaseProvider.GetYandexUser(token));
-        post.saveIt();
-        return post;
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (userContext.hasUser()){
+            userContext.createPost(title, body);
+        }
+
+        return userContext;
     }
 
 
@@ -55,15 +63,15 @@ public class PostResources {
     @Path("/{id}/addComment")
     @Template(name = "/post/showPost.ftl")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Post addComment(@PathParam("id") String idPost,
-                           @FormParam("commentBody") String bodyComment,
-                           @CookieParam("token") String token) throws IOException, JSONException {
-        Comment comment = new Comment();
-        comment.setBody(bodyComment);
-        comment.setParent(Post.findById(idPost));
-        comment.setUser(DatabaseProvider.GetYandexUser(token));
-        comment.saveIt();
+    public UserContext addComment(@PathParam("id") String postId,
+                           @FormParam("commentBody") String commentBody) {
 
-        return Post.findById(idPost);
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (userContext.hasUser()){
+            userContext.addCommentToPost(commentBody, postId);
+        }
+
+        return userContext ;
     }
 }
