@@ -79,8 +79,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
         try {
             responseJson = new JSONObject(jsonMessage);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             getLogger().error(e.getMessage());
         }
 
@@ -92,8 +91,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
             if (responseJson.has(attributeName)){
                 attribute = responseJson.getString(attributeName);
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             getLogger().error(e.getMessage());
         }
 
@@ -112,8 +110,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
         try{
             response = call.execute();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             getLogger().error(e.getMessage());
         }
 
@@ -123,8 +120,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
         try {
             responseString = response.body().string();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             getLogger().error(e.getMessage());
         }
 
@@ -161,9 +157,9 @@ public class DatabaseProvider implements ContainerRequestFilter {
         return getJsonAttribute(responseForTokenString, "access_token");
     }
 
-    public static User getYandexUser(String access_token) {
+    public static User getYandexUser(String accessToken) {
 
-        String url = String.format("https://login.yandex.ru/info?format=json&oauth_token=%s", access_token);
+        String url = String.format("https://login.yandex.ru/info?format=json&oauth_token=%s", accessToken);
 
         Request requestPassport = new Request.Builder()
                 .url(url)

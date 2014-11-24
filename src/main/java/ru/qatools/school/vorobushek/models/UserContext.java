@@ -79,8 +79,7 @@ public class UserContext {
     }
 
     public static List<Post> getPosts(){
-        List<Post> postList = Post.findAll().orderBy("created_at");
-        return postList;
+        return Post.findAll().orderBy("created_at");
     }
 
     public String getUserUrl(){

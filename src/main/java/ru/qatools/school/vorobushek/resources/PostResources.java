@@ -47,7 +47,7 @@ public class PostResources {
     @Template(name = "/post/showPost.ftl")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public UserContext createPost(@FormParam("title") String title,
-                           @FormParam("body") String body) {
+                                  @FormParam("body") String body) {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
