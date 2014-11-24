@@ -6,7 +6,7 @@
         <div class="page-header">
             <h2>All Posts</h2>
         </div>
-        <#list model.getPosts()?reverse as post>
+        <#list model.getPosts() as post>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="/post/${post.id}"><h3>${post.title}</h3></a>

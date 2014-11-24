@@ -4,6 +4,7 @@ import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
 import java.util.List;
+import jersey.repackaged.com.google.common.collect.Lists;
 
 /**
  * Created by yurik
@@ -77,7 +78,8 @@ public class UserContext {
     }
 
     public static List<Post> getPosts(){
-        return Post.findAll();
+        List<Post> postList = Post.findAll();
+        return Lists.reverse(postList);
     }
 
     public String getUserUrl(){
