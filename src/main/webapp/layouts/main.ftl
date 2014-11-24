@@ -28,13 +28,12 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${userName} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>
-                        <a href=${yandexLoginUrl}>Profile</a></li>
-                        <li class="divider"></li>
-                        <li><a href="/logout" method="GET" action="/logout">Logout</a></li>
-                        </ul>
+                                <li><a href=${yandexLoginUrl}>Profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/logout" method="GET" action="/logout">Logout</a></li>
+                            </ul>
                         <#else>
-                        <a href="https://oauth.yandex.ru/authorize?response_type=code&client_id=17c735ef06644350b6b9fabc0ae467ed">Sign in</a></li>
+                            <a href=${yandexLoginUrl}>Sign in</a></li>
                         </#if>
                 </ul>
             </div>
@@ -46,20 +45,15 @@
             </div>
       </div>
     </nav>
-</header>    
+</header>
         <div class="row">
-            <!-- sidebar -->
             <div class="column col-sm-3" id="sidebar">
-                <#--<a class="logo" href="/"><img alt="Brand" src="/public/app/img/logo.jpg"></a>-->
-                <!-- insert content for sidebar here -->
-                
                 <ul class="nav hidden-xs" id="sidebar-footer">
                     <li>
                       <a href="/"><h3>Vorobushek</h3>Made with <i class="glyphicon glyphicon-heart-empty"></i></a>
                     </li>
                 </ul>
             </div>
-            <!-- /sidebar -->  
             <div class="column col-sm-9" id="main">
                 <div class="padding">
                     <div class="full col-sm-9">
