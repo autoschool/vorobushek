@@ -80,7 +80,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         try {
             responseJson = new JSONObject(jsonMessage);
         } catch (JSONException e) {
-            getLogger().error(e.getMessage());
+            getLogger().error("DatabaseProvider context: ", e.getMessage());
         }
 
         if (responseJson == null) {
@@ -92,7 +92,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
                 attribute = responseJson.getString(attributeName);
             }
         } catch (JSONException e) {
-            getLogger().error(e.getMessage());
+            getLogger().error("DatabaseProvider context: ", e.getMessage());
         }
 
         return attribute;
@@ -111,7 +111,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         try{
             response = call.execute();
         } catch (IOException e) {
-            getLogger().error(e.getMessage());
+            getLogger().error("DatabaseProvider context: ", e.getMessage());
         }
 
         if (response == null){
@@ -121,7 +121,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         try {
             responseString = response.body().string();
         } catch (IOException e) {
-            getLogger().error(e.getMessage());
+            getLogger().error("DatabaseProvider context: ", e.getMessage());
         }
 
         return responseString;

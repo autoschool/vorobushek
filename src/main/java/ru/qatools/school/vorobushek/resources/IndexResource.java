@@ -36,8 +36,7 @@ public class IndexResource {
 
         MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 
-        if (queryParams.containsKey("code"))
-        {
+        if (queryParams.containsKey("code")) {
             String responseCode = queryParams.get("code").toString().replace("[", "").replace("]","");
             String token = DatabaseProvider.getYandexToken(responseCode);
             UserContext userContext = new UserContext(token);
