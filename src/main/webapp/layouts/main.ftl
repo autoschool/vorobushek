@@ -50,7 +50,7 @@
         <div class="row">
             <!-- sidebar -->
             <div class="column col-sm-3" id="sidebar">
-                <a class="logo" href="/"><img alt="Brand" src="/public/app/img/logo.jpg"></a>
+                <#--<a class="logo" href="/"><img alt="Brand" src="/public/app/img/logo.jpg"></a>-->
                 <!-- insert content for sidebar here -->
                 
                 <ul class="nav hidden-xs" id="sidebar-footer">

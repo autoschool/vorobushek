@@ -1,6 +1,4 @@
-package ru.qatools.school.vorobushek.tests;
-
-
+package ru.qatools.school.vorobushek.resources;
 
 import net.anthavio.phanbedder.Phanbedder;
 import org.junit.Before;
@@ -19,7 +17,7 @@ import java.io.File;
  * Created by yurik
  * 23.11.14.
  */
-public class IndexResourceTest  {
+public class ITIndexResourceTest {
 
     private PhantomJSDriver driver;
 
