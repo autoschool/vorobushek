@@ -7,7 +7,6 @@ import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.File;
@@ -40,5 +39,7 @@ public class ITIndexResourceTest {
 
         final String hello = driver.getPageSource();
         DatabaseProvider.getLogger().info(hello);
+
+        DatabaseProvider.getLogger().info("TEST INDEX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }

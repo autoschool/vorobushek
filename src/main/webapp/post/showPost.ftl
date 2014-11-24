@@ -35,9 +35,6 @@
                 <h2>Guest can't add any comments. Please, login and try again.</h2>
             </div>
         </#if>
-        <div>
-    </div>
-
     </div>
 </div>
 </@layout.layout>
