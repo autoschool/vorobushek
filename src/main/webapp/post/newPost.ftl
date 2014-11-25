@@ -4,7 +4,7 @@
 <div class="row">
     <#if model.hasUser()>
         <div class="page-header">
-            <h2>by ${model.getCurrentUserString()}</h2>
+            <h2>Create new post</h2>
         </div>
         <div class="col-md-12">
             <form class="form" role="form" action="/post" method="post">

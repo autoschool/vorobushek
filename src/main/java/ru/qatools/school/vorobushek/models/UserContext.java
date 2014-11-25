@@ -4,6 +4,7 @@ import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
 import java.util.List;
+import jersey.repackaged.com.google.common.collect.Lists;
 
 /**
  * Created by yurik
@@ -58,6 +59,23 @@ public class UserContext {
 
         return post;
     }
+    
+    public Post editPost(String postTitle, String postBody, String postId) {
+
+        if (currentUser == null){
+            throw new NotAuthorizedException("You Don't Have Permission");
+        }
+
+        Post post = Post.findById(postId);
+        post.setTitle(postTitle);
+        post.setBody(postBody);
+        post.setUser(currentUser);
+        post.saveIt();
+
+        lastPost = post;
+
+        return post;
+    }
 
     public Post addCommentToPost(String commentBody, String postId){
 
@@ -79,7 +97,8 @@ public class UserContext {
     }
 
     public static List<Post> getPosts(){
-        return Post.findAll().orderBy("created_at");
+        List<Post> postList = Post.findAll().orderBy("created_at");
+        return Lists.reverse(postList);
     }
 
     public String getUserUrl(){

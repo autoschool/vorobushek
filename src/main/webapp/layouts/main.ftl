@@ -22,7 +22,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="/post/new" method="GET" action="/post/new" type="submit">New post</a></li>
                         <li>
-                            <#if userName?has_content>
+                            <#if model.hasUser()>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${userName} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -32,7 +32,8 @@
                                     <li><a href="/logout" method="GET" action="/logout">Logout</a></li>
                                 </ul>
                             <#else>
-                                <a href=${yandexLoginUrl}>Sign in</a></li>
+                                <a href=${yandexLoginUrl}>Sign in</a>
+                            </li>
                             </#if>
                         </ul>
                     </div>

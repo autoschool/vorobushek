@@ -74,4 +74,29 @@ public class PostResources {
 
         return userContext ;
     }
+    
+    @GET
+    @Path("/{id}/edit")
+    @Template(name = "/post/editPost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext editPost() {
+        return DatabaseProvider.getUserContext(httpRequest);
+    }
+        
+    @POST
+    @Path("/{id}")
+    @Template(name = "/post/showPost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext editPost(@PathParam("id") String postId,
+                                    @FormParam("title") String title,
+                                        @FormParam("body") String body) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (userContext.hasUser()){
+            userContext.editPost(title, body, postId);
+        }
+        
+        return userContext;
+    }
 }
