@@ -39,20 +39,37 @@ public class PostResources {
     @Path("/new")
     @Template(name = "/post/newPost.ftl")
     public UserContext newPost() {
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+        userContext.setCurrentPost(new Post());
         return DatabaseProvider.getUserContext(httpRequest);
+    }
+    
+    @GET
+    @Path("/{id}/edit")
+    @Template(name = "/post/editPost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext changePost(@PathParam("id") String postId) {
+        Post currentPost = Post.findById(postId);
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+        if(currentPost.getUser().getDisplayName().equals(userContext.getCurrentUserString())) {
+            userContext.setCurrentPost(currentPost);
+            return userContext;
+        }
+        else
+            return new UserContext();
     }
 
     @POST
     @Path("/")
     @Template(name = "/post/showPost.ftl")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext createPost(@FormParam("title") String title,
+    public UserContext savePost(@FormParam("title") String title,
                                   @FormParam("body") String body) {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
-
+        
         if (userContext.hasUser()){
-            userContext.createPost(title, body);
+            userContext.savePost(title, body);
         }
 
         return userContext;
@@ -72,31 +89,6 @@ public class PostResources {
             userContext.addCommentToPost(commentBody, postId);
         }
 
-        return userContext ;
-    }
-    
-    @GET
-    @Path("/{id}/edit")
-    @Template(name = "/post/editPost.ftl")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext editPost() {
-        return DatabaseProvider.getUserContext(httpRequest);
-    }
-        
-    @POST
-    @Path("/{id}")
-    @Template(name = "/post/showPost.ftl")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext editPost(@PathParam("id") String postId,
-                                    @FormParam("title") String title,
-                                        @FormParam("body") String body) {
-
-        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
-
-        if (userContext.hasUser()){
-            userContext.editPost(title, body, postId);
-        }
-        
         return userContext;
     }
 }

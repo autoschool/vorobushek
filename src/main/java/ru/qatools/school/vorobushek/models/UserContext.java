@@ -15,6 +15,7 @@ public class UserContext {
     private User currentUser;
 
     private Post lastPost;
+    private Post currentPost;
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
@@ -42,14 +43,22 @@ public class UserContext {
     public Post getLastPost(){
         return lastPost;
     }
+    
+    public void setCurrentPost(Post post) {
+        currentPost = post;
+    }
+    
+    public Post getCurrentPost() {
+        return currentPost;
+    }
 
-    public Post createPost(String postTitle, String postBody) {
+    public Post savePost(String postTitle, String postBody) {
 
         if (currentUser == null){
             throw new NotAuthorizedException("You Don't Have Permission");
         }
 
-        Post post = new Post();
+        Post post = currentPost;
         post.setTitle(postTitle);
         post.setBody(postBody);
         post.setUser(currentUser);
@@ -60,23 +69,6 @@ public class UserContext {
         return post;
     }
     
-    public Post editPost(String postTitle, String postBody, String postId) {
-
-        if (currentUser == null){
-            throw new NotAuthorizedException("You Don't Have Permission");
-        }
-
-        Post post = Post.findById(postId);
-        post.setTitle(postTitle);
-        post.setBody(postBody);
-        post.setUser(currentUser);
-        post.saveIt();
-
-        lastPost = post;
-
-        return post;
-    }
-
     public Post addCommentToPost(String commentBody, String postId){
 
         if (currentUser == null){
