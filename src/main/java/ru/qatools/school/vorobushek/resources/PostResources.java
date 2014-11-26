@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
 
 
 /**
@@ -25,70 +27,111 @@ public class PostResources {
     HttpServletRequest httpRequest;
 
     @GET
-    @Path("/{id}")
+    @Path("/{id}/showComments")
     @Template(name = "/post/showPost.ftl")
-    public UserContext showPost(@PathParam("id") String id) {
+    public UserContext showPost(@PathParam("id") String postId) {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
-        userContext.setLastPost(id);
+
+        userContext.setLastShownPost(postId);
 
         return userContext;
+    }
+
+    @POST
+    @Path("/{id}/showComments")
+    @Template(name = "/post/showPost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext addComment(  @PathParam("id") String postId,
+                                    @FormParam("commentBody") String commentBody) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (commentBody.isEmpty())
+            return userContext;
+
+        if (userContext.hasUser()){
+            userContext.addCommentToPost(commentBody, postId);
+            userContext.setLastShownPost(postId);
+        }
+
+        return userContext;
+    }
+
+    @GET
+    @Path("/{id}/edit")
+    @Template(name = "/post/editPost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext showEditPost(@PathParam("id") String postId) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        userContext.setLastEditedPost(postId);
+
+        return userContext;
+    }
+
+    @POST
+    @Path("/{id}/edit")
+    @Template(name = "/post/showPost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext editPost(@PathParam("id") String postId,
+                                  @FormParam("title") String postTitle,
+                                  @FormParam("body") String postBody) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (postTitle.isEmpty() || postBody.isEmpty())
+            return userContext;
+
+        if (userContext.hasUser()){
+            userContext.updatePost(postId, postTitle, postBody);
+            userContext.setLastShownPost(postId);
+        }
+
+        return userContext;
+    }
+
+    @POST
+    @Path("/{id}/delete")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response deletePost(@PathParam("id") String postId) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (userContext.hasUser()){
+            userContext.deletePost(postId);
+        }
+
+        return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
     }
 
     @GET
     @Path("/new")
     @Template(name = "/post/newPost.ftl")
-    public UserContext newPost() {
-        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
-        userContext.setCurrentPost(new Post());
+    public UserContext showCreatePost() {
         return DatabaseProvider.getUserContext(httpRequest);
     }
-    
-    @GET
-    @Path("/{id}/edit")
-    @Template(name = "/post/editPost.ftl")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext changePost(@PathParam("id") String postId) {
-        Post currentPost = Post.findById(postId);
-        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
-        if(currentPost.getUser().getDisplayName().equals(userContext.getCurrentUserString())) {
-            userContext.setCurrentPost(currentPost);
-            return userContext;
-        }
-        else
-            return new UserContext();
-    }
+
+
 
     @POST
-    @Path("/")
-    @Template(name = "/post/showPost.ftl")
+    @Path("/new")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext savePost(@FormParam("title") String title,
-                                  @FormParam("body") String body) {
+    public Response createPost(@FormParam("title") String postTitle,
+                                @FormParam("body") String postBody) {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (postTitle.isEmpty() || postBody.isEmpty())
+            return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
         
         if (userContext.hasUser()){
-            userContext.savePost(title, body);
+            Post post = userContext.createPost(postTitle, postBody);
+            userContext.setLastShownPost(post.getId().toString());
         }
 
-        return userContext;
+        return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
     }
 
-
-    @POST
-    @Path("/{id}/addComment")
-    @Template(name = "/post/showPost.ftl")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext addComment(@PathParam("id") String postId,
-                           @FormParam("commentBody") String commentBody) {
-
-        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
-
-        if (userContext.hasUser()){
-            userContext.addCommentToPost(commentBody, postId);
-        }
-
-        return userContext;
-    }
 }

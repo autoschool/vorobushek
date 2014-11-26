@@ -4,23 +4,22 @@
 <div class="row">
     <div class="col-md-12">
     <div class="page-header">
-        <h2>${model.lastPost.title}</h2>
+        <h2>${model.getLastShownPost().getTitle()}</h2>
     </div>
     <div class="post-body">
-    ${model.lastPost.body}
-
+        ${model.getLastShownPost().getBody()}
     <div class="panel-body">
         <ul class="list-group">
             <li class="list-group-item  active">
-                <span class="badge">${model.lastPost.getCommentsCount()}</span>
+                <span class="badge">${model.getLastShownPost().getCommentsCount()}</span>
                 Comments
             </li>
-            <#list model.lastPost.comments as comment>
-                <li class="list-group-item">${comment.body} by ${comment.user.displayName}</li>
+            <#list model.getLastShownPost().comments as comment>
+                <li class="list-group-item"><span class="label label-info">${comment.user.displayName}</span><div class="well">${comment.body}</div></li>
             </#list>
         </ul>
         <#if model.hasUser()>
-            <form class="form" role="form" action="/post/${model.lastPost.id}/addComment" method="post">
+            <form class="form" role="form" action="showComments" method="post">
                 <div class="form-group">
                     <textarea class="form-control" rows="10" name="commentBody"></textarea>
                 </div>
@@ -30,10 +29,6 @@
                     </div>
                 </div>
             </form>
-        <#else>
-            <div class="page-header">
-                <h2>Guest can't add any comments. Please, login and try again.</h2>
-            </div>
         </#if>
     </div>
 </div>

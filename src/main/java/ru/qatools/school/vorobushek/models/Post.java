@@ -12,6 +12,16 @@ import java.util.List;
 
 public class Post extends Model {
 
+    public boolean canEdit = false;
+
+    public void setCanEdit(User currentUser){
+        canEdit = getUser().equals(currentUser);
+    }
+
+    public boolean getCanEdit(){
+        return canEdit;
+    }
+
     public String getTitle() {
         return getString("title");
     }
@@ -30,10 +40,6 @@ public class Post extends Model {
 
     public Timestamp getCreatedAt() {
         return getTimestamp("created_at");
-    }
-
-    public void addComment(Comment comment){
-        this.add(comment);
     }
 
     public List<Comment> getComments(){

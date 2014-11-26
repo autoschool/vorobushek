@@ -7,7 +7,7 @@
             <h2>Create new post</h2>
         </div>
         <div class="col-md-12">
-            <form class="form" role="form" action="/post" method="post">
+            <form class="form" role="form" method="POST" action="new" >
                 <div class="page-header">
                     <div class="form-group">
                         <input type="text" class="form-control" id="title" name="title"

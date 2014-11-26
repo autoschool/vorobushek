@@ -3,8 +3,8 @@ package ru.qatools.school.vorobushek.models;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
+import java.util.Iterator;
 import java.util.List;
-import jersey.repackaged.com.google.common.collect.Lists;
 
 /**
  * Created by yurik
@@ -14,8 +14,8 @@ public class UserContext {
 
     private User currentUser;
 
-    private Post lastPost;
-    private Post currentPost;
+    private Post lastShownPost;
+    private Post lastEditedPost;
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
@@ -36,37 +36,41 @@ public class UserContext {
                 : currentUser.getDisplayName();
     }
 
-    public void setLastPost(String postId){
-        lastPost = Post.findById(postId);
-    }
-
-    public Post getLastPost(){
-        return lastPost;
-    }
-    
-    public void setCurrentPost(Post post) {
-        currentPost = post;
-    }
-    
-    public Post getCurrentPost() {
-        return currentPost;
-    }
-
-    public Post savePost(String postTitle, String postBody) {
+    public Post createPost(String postTitle, String postBody) {
 
         if (currentUser == null){
             throw new NotAuthorizedException("You Don't Have Permission");
         }
 
-        Post post = currentPost;
+        Post post = new Post();
         post.setTitle(postTitle);
         post.setBody(postBody);
         post.setUser(currentUser);
         post.saveIt();
 
-        lastPost = post;
+        return post;
+    }
+
+    public Post updatePost(Object postId, String postTitle, String postBody) {
+
+        if (currentUser == null){
+            throw new NotAuthorizedException("You Don't Have Permission");
+        }
+
+        Post post = Post.findById(postId);
+        post.setTitle(postTitle);
+        post.setBody(postBody);
+        post.saveIt();
 
         return post;
+    }
+
+    public void deletePost(String id){
+        if (currentUser == null){
+            throw new NotAuthorizedException("You Don't Have Permission");
+        }
+
+        Post.delete("id = ?", id);
     }
     
     public Post addCommentToPost(String commentBody, String postId){
@@ -88,9 +92,16 @@ public class UserContext {
         return post;
     }
 
-    public static List<Post> getPosts(){
-        List<Post> postList = Post.findAll().orderBy("created_at");
-        return Lists.reverse(postList);
+    public List<Post> getPosts(){
+        List<Post> postList = Post.findAll().orderBy("created_at desc");
+
+        if (hasUser()){
+            for (Post post : postList) {
+                post.setCanEdit(currentUser);
+            }
+        }
+
+        return postList;
     }
 
     public String getUserUrl(){
@@ -99,4 +110,19 @@ public class UserContext {
                : "https://passport.yandex.ru/passport?mode=passport";
     }
 
+    public Post getLastEditedPost() {
+        return lastEditedPost;
+    }
+
+    public void setLastEditedPost(String id) {
+        this.lastEditedPost = Post.findById(id);
+    }
+
+    public Post getLastShownPost() {
+        return lastShownPost;
+    }
+
+    public void setLastShownPost(String id) {
+        this.lastShownPost = Post.findById(id);
+    }
 }
