@@ -34,12 +34,23 @@ public class User extends Model {
         setString("displayName", displayName);
     }
 
-    public boolean equals(User user){
-        if (user == null) return false;
-
-        return user.getLogin().equals(getLogin())
-                && user.getEmail().equals(getEmail())
-                && user.getDisplayName().equals(getDisplayName());
+    @Override
+    public int hashCode(){
+        return getLogin().hashCode()
+                ^ getEmail().hashCode()
+                ^ getDisplayName().hashCode();
     }
 
+
+    @Override
+    public boolean equals(Object user){
+
+        User u = (user instanceof User ? (User)user : null);
+
+        if (u == null) {
+            return false;
+        }
+
+        return hashCode() == u.hashCode();
+    }
 }

@@ -47,8 +47,9 @@ public class PostResources {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (commentBody.isEmpty())
+        if (commentBody.isEmpty()){
             return userContext;
+        }
 
         if (userContext.hasUser()){
             userContext.addCommentToPost(commentBody, postId);
@@ -81,8 +82,9 @@ public class PostResources {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (postTitle.isEmpty() || postBody.isEmpty())
+        if (postTitle.isEmpty() || postBody.isEmpty()){
             return userContext;
+        }
 
         if (userContext.hasUser()){
             userContext.updatePost(postId, postTitle, postBody);
@@ -123,8 +125,9 @@ public class PostResources {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (postTitle.isEmpty() || postBody.isEmpty())
+        if (postTitle.isEmpty() || postBody.isEmpty()){
             return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
+        }
         
         if (userContext.hasUser()){
             Post post = userContext.createPost(postTitle, postBody);

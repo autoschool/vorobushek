@@ -42,7 +42,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     static {
         try {
-            dbUrl = format("jdbc:h2:file:%s/%s,user=%s", getDbPath(), getDbName(), DBUSER);
+            dbUrl = format("jdbc:h2:mem:%s/%s,user=%s", getDbPath(), getDbName(), DBUSER);
             LOGGER.info(format("Starting embedded database with url '%s' ...", dbUrl));
             openConnection();
             Flyway flyway = new Flyway();
@@ -80,7 +80,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         try {
             responseJson = new JSONObject(jsonMessage);
         } catch (JSONException e) {
-            getLogger().error("Parse JSON message to get attribute: ", e.getMessage());
+            LOGGER.error("Parse JSON message to get attribute: ", e.getMessage());
         }
 
         if (responseJson == null) {
@@ -92,7 +92,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
                 attribute = responseJson.getString(attributeName);
             }
         } catch (JSONException e) {
-            getLogger().error("Try to get attribute from JSON message: ", e.getMessage());
+            LOGGER.error("Try to get attribute from JSON message: ", e.getMessage());
         }
 
         return attribute;
@@ -111,7 +111,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         try{
             response = call.execute();
         } catch (IOException e) {
-            getLogger().error("Try to get response by executing http request: ", e.getMessage());
+            LOGGER.error("Try to get response by executing http request: ", e.getMessage());
         }
 
         if (response == null){
@@ -121,7 +121,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         try {
             responseString = response.body().string();
         } catch (IOException e) {
-            getLogger().error("Try to read response: ", e.getMessage());
+            LOGGER.error("Try to read response: ", e.getMessage());
         }
 
         return responseString;

@@ -3,7 +3,6 @@ package ru.qatools.school.vorobushek.models;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,6 +11,8 @@ import java.util.List;
  */
 public class UserContext {
 
+    private final String dineAccessMessage;
+
     private User currentUser;
 
     private Post lastShownPost;
@@ -19,10 +20,12 @@ public class UserContext {
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
+        dineAccessMessage = "You Don't Have Permission";
     }
 
     public UserContext() {
         currentUser = null;
+        dineAccessMessage = "You Don't Have Permission";
     }
 
     public boolean hasUser(){
@@ -39,7 +42,7 @@ public class UserContext {
     public Post createPost(String postTitle, String postBody) {
 
         if (currentUser == null){
-            throw new NotAuthorizedException("You Don't Have Permission");
+            throw new NotAuthorizedException(dineAccessMessage);
         }
 
         Post post = new Post();
@@ -54,7 +57,7 @@ public class UserContext {
     public Post updatePost(Object postId, String postTitle, String postBody) {
 
         if (currentUser == null){
-            throw new NotAuthorizedException("You Don't Have Permission");
+            throw new NotAuthorizedException(dineAccessMessage);
         }
 
         Post post = Post.findById(postId);
@@ -67,7 +70,7 @@ public class UserContext {
 
     public void deletePost(String id){
         if (currentUser == null){
-            throw new NotAuthorizedException("You Don't Have Permission");
+            throw new NotAuthorizedException(dineAccessMessage);
         }
 
         Post.delete("id = ?", id);
@@ -76,7 +79,7 @@ public class UserContext {
     public Post addCommentToPost(String commentBody, String postId){
 
         if (currentUser == null){
-            throw new NotAuthorizedException("You Don't Have Permission");
+            throw new NotAuthorizedException(dineAccessMessage);
         }
 
         Post post = Post.findById(postId);
