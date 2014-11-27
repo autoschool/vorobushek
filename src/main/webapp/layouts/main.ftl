@@ -69,6 +69,7 @@
 </div>
 
 <footer>
+        <div>${model.getLog()}</div>
 </footer>
 </body>
 </#macro>

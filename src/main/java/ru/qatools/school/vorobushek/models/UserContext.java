@@ -18,6 +18,7 @@ public class UserContext {
     private Post lastShownPost;
     private Post lastEditedPost;
 
+
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
         dineAccessMessage = "You Don't Have Permission";
@@ -127,5 +128,13 @@ public class UserContext {
 
     public void setLastShownPost(String id) {
         this.lastShownPost = Post.findById(id);
+    }
+
+    public String getLog() {
+        return DatabaseProvider.Log;
+    }
+
+    public void setLog(String log) {
+        DatabaseProvider.Log = log;
     }
 }
