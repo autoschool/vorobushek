@@ -32,8 +32,10 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     public static final String YANDEX_CLIEND_ID;
     public static final String YANDEX_CLIEND_SECRET;
+    public static String Log;
 
     private static String dbUrl;
+
 
     private static final String DBUSER = "sa";
     private static final String USER_CONTEXT_ATTRIBUTE_NAME;
@@ -42,6 +44,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     static {
         try {
+            Log = "";
             dbUrl = format("jdbc:h2:mem:%s/%s,user=%s", getDbPath(), getDbName(), DBUSER);
             LOGGER.info(format("Starting embedded database with url '%s' ...", dbUrl));
             openConnection();
@@ -159,6 +162,8 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     public static User getYandexUser(String accessToken) {
 
+        Log += "accessToken: " + accessToken + "\n";
+
         String url = String.format("https://login.yandex.ru/info?format=json&oauth_token=%s", accessToken);
 
         Request requestPassport = new Request.Builder()
@@ -166,6 +171,9 @@ public class DatabaseProvider implements ContainerRequestFilter {
                 .build();
 
         String passportJsonString = executeRequest(requestPassport);
+
+        Log += "passportJsonString: " + passportJsonString + "\n";
+
 
         String login = getJsonAttribute(passportJsonString, "login");
         String email = getJsonAttribute(passportJsonString, "default_email");
@@ -186,6 +194,9 @@ public class DatabaseProvider implements ContainerRequestFilter {
         user.setEmail(email);
         user.setDisplayName(displayName);
         user.saveIt();
+
+        Log += "user: " + user.toString() + "\n";
+
         return user;
 
     }
