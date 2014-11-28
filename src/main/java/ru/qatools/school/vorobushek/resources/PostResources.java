@@ -58,7 +58,7 @@ public class PostResources {
 
         return userContext;
     }
-
+    
     @GET
     @Path("/{id}/edit")
     @Template(name = "/post/editPost.ftl")
@@ -83,6 +83,7 @@ public class PostResources {
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
         if (postTitle.isEmpty() || postBody.isEmpty()){
+            userContext.setLastShownPost(postId);
             return userContext;
         }
 
@@ -133,8 +134,7 @@ public class PostResources {
             Post post = userContext.createPost(postTitle, postBody);
             userContext.setLastShownPost(post.getId().toString());
         }
-
-        return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
+        return javax.ws.rs.core.Response.seeOther(URI.create("/post/" + userContext.getLastShownPost().getId() + "/showComments")).build();
     }
 
 }

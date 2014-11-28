@@ -13,7 +13,7 @@ public class UserContext {
 
     private final String dineAccessMessage;
 
-    private User currentUser;
+    private final User currentUser;
 
     private Post lastShownPost;
     private Post lastEditedPost;
@@ -94,7 +94,7 @@ public class UserContext {
 
         return post;
     }
-
+    
     public List<Post> getPosts(){
         List<Post> postList = Post.findAll().orderBy("created_at desc");
 

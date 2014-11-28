@@ -9,6 +9,26 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <profiles>
+        <profile>
+            <id>Production</id>
+            <properties>
+                <yandexCliendId>5c64427a5ed34bc69846371b4bfc4cdd</yandexCliendId>
+                <yandexCliendSecret>9b91b40b9f1442ea8b63ebd81cc0e01a</yandexCliendSecret>
+            </properties>
+        </profile>
+        <profile>
+            <id>Testing</id>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
+                <properties>
+                    <yandexCliendId>17c735ef06644350b6b9fabc0ae467ed</yandexCliendId>
+                    <yandexCliendSecret>91928eb427e54e84a09d57b7f7eeda89</yandexCliendSecret>
+                </properties>
+        </profile>
+    </profiles>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -37,6 +57,23 @@
             <version>${jersey.version}</version>
         </dependency>
 
+        <!-- DB -->
+        <dependency>
+            <groupId>org.javalite</groupId>
+            <artifactId>activejdbc</artifactId>
+            <version>1.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.182</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>3.0</version>
+        </dependency>
+
         <!-- TEST -->
         <dependency>
             <groupId>net.anthavio</groupId>
@@ -53,24 +90,6 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
-        </dependency>
-
-
-        <!-- DB -->
-        <dependency>
-            <groupId>org.javalite</groupId>
-            <artifactId>activejdbc</artifactId>
-            <version>1.4.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.182</version>
-        </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>3.0</version>
         </dependency>
 
         <!-- Logger -->
@@ -174,6 +193,24 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.basedir}/src/main/resources/application.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>

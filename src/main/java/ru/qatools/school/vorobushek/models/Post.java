@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Post extends Model {
 
-    public boolean canEdit;
+    private boolean canEdit;
 
     public void setCanEdit(User currentUser){
         canEdit = getUser().equals(currentUser);

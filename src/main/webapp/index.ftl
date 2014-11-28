@@ -12,7 +12,7 @@
                     <a href="/post/${post.id}/showComments"><h3>${post.title}</h3></a>
                      Posted on ${post.createdAt} by <span class="label label-info">${post.user.displayName}</span>
                     </br>
-                    <p>  ${post.body} </p><span class="badge">${post.getCommentsCount()} comments</span>
+                    <p>  ${post.body} </p><span class="badge"><a href="/post/${post.id}/showComments">${post.getCommentsCount()} comments</a></span>
                     <#if post.getCanEdit()>
                         <form class="navbar-form navbar-right" method="GET" action="/post/${post.id}/edit">
                             <button type="submit" class="btn btn-default">Edit</button>
