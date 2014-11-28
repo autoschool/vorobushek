@@ -129,12 +129,4 @@ public class UserContext {
     public void setLastShownPost(String id) {
         this.lastShownPost = Post.findById(id);
     }
-
-    public String getLog() {
-        return DatabaseProvider.Log;
-    }
-
-    public void setLog(String log) {
-        DatabaseProvider.Log = log;
-    }
 }
