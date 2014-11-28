@@ -52,8 +52,8 @@ public class DatabaseProvider implements ContainerRequestFilter {
             LOGGER.error("Failed to start embedded database", e);
         }
         
-        YANDEX_CLIEND_ID = "17c735ef06644350b6b9fabc0ae467ed";
-        YANDEX_CLIEND_SECRET = "91928eb427e54e84a09d57b7f7eeda89";
+        YANDEX_CLIEND_ID = "5c64427a5ed34bc69846371b4bfc4cdd";
+        YANDEX_CLIEND_SECRET = "9b91b40b9f1442ea8b63ebd81cc0e01a";
         YANDEX_TOKEM_URL = "http://oauth.yandex.ru/token";
         USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
     }
