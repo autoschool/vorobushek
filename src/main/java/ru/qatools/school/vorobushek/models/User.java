@@ -53,9 +53,4 @@ public class User extends Model {
 
         return hashCode() == u.hashCode();
     }
-
-    @Override
-    public String toString(){
-        return getLogin();
-    }
 }

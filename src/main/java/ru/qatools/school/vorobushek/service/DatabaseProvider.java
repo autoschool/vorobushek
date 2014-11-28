@@ -18,6 +18,8 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import static java.lang.String.format;
 import static java.nio.file.Files.createTempDirectory;
@@ -53,8 +55,17 @@ public class DatabaseProvider implements ContainerRequestFilter {
             LOGGER.error("Failed to start embedded database", e);
         }
         
-        YANDEX_CLIEND_ID = "5c64427a5ed34bc69846371b4bfc4cdd";
-        YANDEX_CLIEND_SECRET = "9b91b40b9f1442ea8b63ebd81cc0e01a";
+        Properties prop = new Properties();
+        
+        try(InputStream inputStream = DatabaseProvider.class.getResourceAsStream("/application.properties")) {
+            prop.load(inputStream);
+        }
+        catch ( IOException e ) {
+            LOGGER.error( e.getMessage(), e );
+        }
+        
+        YANDEX_CLIEND_ID = prop.getProperty("yandexCliendId");
+        YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
         YANDEX_TOKEM_URL = "http://oauth.yandex.ru/token";
         USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
     }
