@@ -6,6 +6,7 @@
 target
 *.log
 /.project
+application.properties
 
 #Custom
 run.sh
