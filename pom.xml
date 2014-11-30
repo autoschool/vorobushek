@@ -11,6 +11,16 @@
 
     <profiles>
         <profile>
+            <id>Default</id>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
+                <properties>
+                    <yandexCliendId>17c735ef06644350b6b9fabc0ae467ed</yandexCliendId>
+                    <yandexCliendSecret>91928eb427e54e84a09d57b7f7eeda89</yandexCliendSecret>
+                </properties>
+        </profile>
+        <profile>
             <id>Production</id>
             <properties>
                 <yandexCliendId>5c64427a5ed34bc69846371b4bfc4cdd</yandexCliendId>
@@ -19,12 +29,9 @@
         </profile>
         <profile>
             <id>Testing</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
                 <properties>
-                    <yandexCliendId>17c735ef06644350b6b9fabc0ae467ed</yandexCliendId>
-                    <yandexCliendSecret>91928eb427e54e84a09d57b7f7eeda89</yandexCliendSecret>
+                    <yandexCliendId>f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
+                    <yandexCliendSecret>a5842489330e492ba01e9c9394f1c8cb</yandexCliendSecret>
                 </properties>
         </profile>
     </profiles>
@@ -215,6 +222,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.2.v20140723</version>
                 <configuration>
+                    <contextXml>${basedir}/src/main/webapp/WEB-INF/jetty-context.xml</contextXml>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
                     <webApp>
                         <contextPath>/</contextPath>
