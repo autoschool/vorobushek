@@ -77,6 +77,17 @@ public class UserContext {
         return post;
     }
 
+    public void deletePost(String postId) {
+
+        if (currentUser == null){
+            throw new NotAuthorizedException("You Don't Have Permission");
+        }
+
+        Post post = Post.findById(postId);
+        post.delete();
+
+    }
+
     public Post addCommentToPost(String commentBody, String postId){
 
         if (currentUser == null){

@@ -82,7 +82,28 @@ public class PostResources {
     public UserContext editPost() {
         return DatabaseProvider.getUserContext(httpRequest);
     }
-        
+
+    @GET
+    @Path("/{id}/delete")
+    @Template(name = "/post/deletePost.ftl")
+    public UserContext deletePostConfirmation() {
+        return DatabaseProvider.getUserContext(httpRequest);
+    }
+
+    @POST
+    @Path("/{id}/delete")
+    @Template(name = "/post/deletePost.ftl")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public UserContext deletePost(@PathParam("id") String postId) {
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+
+        if (userContext.hasUser()){
+            userContext.deletePost(postId);
+        }
+
+        return userContext;
+    }
+
     @POST
     @Path("/{id}")
     @Template(name = "/post/showPost.ftl")

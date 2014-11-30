@@ -8,7 +8,7 @@
     </div>
     <div class="post-body">
     ${model.lastPost.body}
-
+    <a href="/post/${model.lastPost.id}/delete" class="btn btn-default pull-right">Delete post</a>
     <div class="panel-body">
         <ul class="list-group">
             <li class="list-group-item  active">
