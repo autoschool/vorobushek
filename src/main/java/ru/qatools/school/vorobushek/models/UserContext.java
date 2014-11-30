@@ -1,5 +1,6 @@
 package ru.qatools.school.vorobushek.models;
 
+import java.util.Date;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
@@ -127,5 +128,13 @@ public class UserContext {
 
     public void setLastShownPost(String id) {
         this.lastShownPost = Post.findById(id);
+    }
+    
+    public Date getBuildDateTime() {
+        return DatabaseProvider.getBuildDateTime();
+    }
+    
+    public String getProjectVersion() {
+        return DatabaseProvider.getProjectVersion();
     }
 }

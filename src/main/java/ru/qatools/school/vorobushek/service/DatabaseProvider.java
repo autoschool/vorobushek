@@ -23,6 +23,9 @@ import java.util.Properties;
 
 import static java.lang.String.format;
 import static java.nio.file.Files.createTempDirectory;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -34,7 +37,9 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     public static final String YANDEX_CLIEND_ID;
     public static final String YANDEX_CLIEND_SECRET;
-
+    private static final String projectVersion;
+    private static Date buildDateTime;
+    
     private static String dbUrl;
 
 
@@ -63,6 +68,16 @@ public class DatabaseProvider implements ContainerRequestFilter {
         catch ( IOException e ) {
             LOGGER.error( e.getMessage(), e );
         }
+        
+         try {
+            buildDateTime = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
+                    .parse(prop.getProperty("timestamp").replace("\\",""));
+        }
+        catch(ParseException e) {
+            LOGGER.error("Failed to get build time", e);
+        }
+        
+        projectVersion = prop.getProperty("projectVersion");
         
         YANDEX_CLIEND_ID = prop.getProperty("yandexCliendId");
         YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
@@ -224,6 +239,13 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         openConnection();
     }
-
-
+    
+    public static Date getBuildDateTime() {
+        return buildDateTime;
+    }
+    
+    public static String getProjectVersion() {
+        return projectVersion;
+    }
+    
 }

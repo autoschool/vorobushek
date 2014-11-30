@@ -50,7 +50,7 @@
                 <a class="logo" href="/"><img alt="Brand" src="/public/app/img/logo.jpg"></a>
                 <ul class="nav hidden-xs" id="sidebar-footer">
                     <li>
-                        <a href="/"><h3>Vorobushek</h3>Made with <i class="glyphicon glyphicon-heart-empty"></i></a>
+                        <a href="/"><h3>Vorobushek</h3>Version: ${model.getProjectVersion()}</br>Built with <i class="glyphicon glyphicon-heart-empty"></i> on ${model.getBuildDateTime()?datetime}</a>
                     </li>
                 </ul>
             </div>
