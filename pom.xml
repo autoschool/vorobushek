@@ -9,6 +9,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <scm>
+        <url>https://github.com/autoschool/vorobushek.git</url>
+        <connection>scm:git:git://github.com/autoschool/vorobushek.git</connection>
+        <developerConnection>scm:git:git@github.com:autoschool/vorobushek.git</developerConnection>
+    </scm>
+
     <profiles>
         <profile>
             <id>Default</id>
@@ -35,7 +41,6 @@
                 </properties>
         </profile>
     </profiles>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -43,7 +48,7 @@
         <jersey.version>2.13</jersey.version>
         <sl4j.version>1.7.7</sl4j.version>
         <jetty.port>9998</jetty.port>
-        <projectVersion>${project.version}</projectVersion>
+        <build.number>SNAPSHOT</build.number>
     </properties>
 
     <dependencies>
@@ -133,6 +138,24 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+
+                        <manifestEntries>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Implementation-Version>${build.number}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
@@ -200,7 +223,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -248,22 +270,6 @@
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.keyboardsamurais.maven</groupId>
-                <artifactId>maven-timestamp-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <propertyName>timestamp</propertyName>
-                    <timestampPattern>dd.MM.yyyy HH:mm:ss</timestampPattern>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>create</goal>
                         </goals>
                     </execution>
                 </executions>

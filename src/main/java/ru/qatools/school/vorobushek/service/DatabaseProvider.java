@@ -37,9 +37,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     public static final String YANDEX_CLIEND_ID;
     public static final String YANDEX_CLIEND_SECRET;
-    private static final String projectVersion;
-    private static Date buildDateTime;
-    
+
     private static String dbUrl;
 
 
@@ -59,7 +57,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         } catch (Exception e) {
             LOGGER.error("Failed to start embedded database", e);
         }
-        
+
         Properties prop = new Properties();
         
         try(InputStream inputStream = DatabaseProvider.class.getResourceAsStream("/application.properties")) {
@@ -69,18 +67,10 @@ public class DatabaseProvider implements ContainerRequestFilter {
             LOGGER.error( e.getMessage(), e );
         }
         
-         try {
-            buildDateTime = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
-                    .parse(prop.getProperty("timestamp").replace("\\",""));
-        }
-        catch(ParseException e) {
-            LOGGER.error("Failed to get build time", e);
-        }
-        
-        projectVersion = prop.getProperty("projectVersion");
-        
+
         YANDEX_CLIEND_ID = prop.getProperty("yandexCliendId");
         YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
+
         YANDEX_TOKEM_URL = "http://oauth.yandex.ru/token";
         USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
     }
@@ -93,7 +83,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         return getProperty("db.path", createTempDirectory("blog").toAbsolutePath().toString());
     }
 
-    private static String getProperty(String key, String defaultValue) {
+    public static String getProperty(String key, String defaultValue) {
         final String value = System.getProperty(key);
         return (value == null) ? defaultValue : value;
     }
@@ -239,13 +229,5 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         openConnection();
     }
-    
-    public static Date getBuildDateTime() {
-        return buildDateTime;
-    }
-    
-    public static String getProjectVersion() {
-        return projectVersion;
-    }
-    
+
 }

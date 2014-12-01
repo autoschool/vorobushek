@@ -5,11 +5,15 @@ import org.glassfish.jersey.server.mvc.Template;
 import ru.qatools.school.vorobushek.models.UserContext;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
-
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 
 /**
@@ -27,6 +31,22 @@ public class IndexResource {
     @Path("/")
     @Template(name = "/index.ftl")
     public UserContext showIndex(){
+
+        if (UserContext.getCurrentProjectVersion() == null) {
+            ServletContext aContext = httpRequest.getSession().getServletContext();
+            InputStream inputStream = aContext.getResourceAsStream("/META-INF/MANIFEST.MF");
+
+            try {
+                Manifest manifest = new Manifest(inputStream);
+                manifest.read(inputStream);
+                Attributes attributes = manifest.getMainAttributes();
+                String currentVersion = attributes.getValue("Implementation-Version");
+                UserContext.setCurrentProjectVersion(currentVersion);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return DatabaseProvider.getUserContext(httpRequest);
     }
 
@@ -42,6 +62,8 @@ public class IndexResource {
             UserContext userContext = new UserContext(token);
             DatabaseProvider.setUserContext(httpRequest, userContext);
         }
+
+
 
         return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
 

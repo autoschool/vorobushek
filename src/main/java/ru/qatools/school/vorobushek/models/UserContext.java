@@ -4,7 +4,9 @@ import java.util.Date;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by yurik
@@ -18,6 +20,8 @@ public class UserContext {
 
     private Post lastShownPost;
     private Post lastEditedPost;
+
+    private static  String currentProjectVersion;
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
@@ -129,12 +133,12 @@ public class UserContext {
     public void setLastShownPost(String id) {
         this.lastShownPost = Post.findById(id);
     }
-    
-    public Date getBuildDateTime() {
-        return DatabaseProvider.getBuildDateTime();
+
+    public static void setCurrentProjectVersion(String version){
+        currentProjectVersion = version;
     }
-    
-    public String getProjectVersion() {
-        return DatabaseProvider.getProjectVersion();
+
+    public static String getCurrentProjectVersion(){
+        return currentProjectVersion;
     }
 }
