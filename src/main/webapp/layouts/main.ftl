@@ -20,7 +20,7 @@
                     <div class="navbar-header navbar-right">
                         <ul class="nav navbar-nav">
                         <#if model.hasUser()>
-                            <li><a href="/post/new" method="GET" action="/post/new" type="submit">New post</a></li>
+                            <li><a href="/post/new" id="new-post-button" method="GET" action="/post/new" type="submit">New post</a></li>
                         <li>
 
                             <li class="dropdown">
@@ -37,7 +37,7 @@
                     </div>
                     <div class="navbar-header navbar-left">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a id="home-link" href="/">Home<span class="sr-only">(current)</span></a></li>
                             <li><a href="#">About</a></li>
                         </ul>
                     </div>

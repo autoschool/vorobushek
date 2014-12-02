@@ -3,9 +3,7 @@ package ru.qatools.school.vorobushek.service;
 import com.squareup.okhttp.*;
 import org.flywaydb.core.Flyway;
 import org.javalite.activejdbc.Base;
-
 import org.javalite.activejdbc.LazyList;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -23,9 +21,6 @@ import java.util.Properties;
 
 import static java.lang.String.format;
 import static java.nio.file.Files.createTempDirectory;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 /**

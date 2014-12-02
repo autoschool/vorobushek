@@ -1,12 +1,9 @@
 package ru.qatools.school.vorobushek.models;
 
-import java.util.Date;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 
 import javax.ws.rs.NotAuthorizedException;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Created by yurik
@@ -21,10 +18,15 @@ public class UserContext {
     private Post lastShownPost;
     private Post lastEditedPost;
 
-    private static  String currentProjectVersion;
+    private static String currentProjectVersion;
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
+        dineAccessMessage = "You Don't Have Permission";
+    }
+
+    public UserContext(User tester) {
+        currentUser = tester;
         dineAccessMessage = "You Don't Have Permission";
     }
 
@@ -32,6 +34,7 @@ public class UserContext {
         currentUser = null;
         dineAccessMessage = "You Don't Have Permission";
     }
+
 
     public boolean hasUser(){
         return currentUser != null;

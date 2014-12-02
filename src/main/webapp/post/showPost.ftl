@@ -7,10 +7,10 @@
 <div class="row">
     <div class="col-md-12">
     <div class="page-header">
-        <h2>${model.getLastShownPost().getTitle()}</h2>
+        <h2 id="post-title">${model.getLastShownPost().getTitle()}</h2>
     </div>
     <div class="post-body">
-        ${model.getLastShownPost().getBody()}
+        <p id="post-body">${model.getLastShownPost().getBody()}</p>
     <div class="panel-body">
         <ul class="list-group">
             <li class="list-group-item  active">
@@ -32,11 +32,11 @@
         <#if model.hasUser()>
             <form class="form" role="form" method="POST" action="showComments">
                 <div class="form-group">
-                    <textarea class="form-control" rows="10" name="commentBody"></textarea>
+                    <textarea id="new-comment-textarea" class="form-control" rows="10" name="commentBody"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-default pull-right">Add Comment</button>
+                        <button id="add-comment-button" type="submit" class="btn btn-default pull-right">Add Comment</button>
                     </div>
                 </div>
             </form>

@@ -15,11 +15,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" rows="10" name="body"></textarea>
+                    <textarea id="new-post-body-textarea" class="form-control" rows="10" name="body"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-danger pull-right">Save</button>
+                        <button id="save-post-button" type="submit" class="btn btn-danger pull-right">Save</button>
                     </div>
                 </div>
             </form>
