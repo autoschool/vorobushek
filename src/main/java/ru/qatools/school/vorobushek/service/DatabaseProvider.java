@@ -187,6 +187,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         String login = getJsonAttribute(passportJsonString, "login");
         String email = getJsonAttribute(passportJsonString, "default_email");
         String displayName = getJsonAttribute(passportJsonString, "display_name");
+        String id  =   getJsonAttribute(passportJsonString, "id");
 
         if (login.isEmpty() || email.isEmpty() || displayName.isEmpty()) {
             return null;
@@ -202,6 +203,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
         user.setLogin(login);
         user.setEmail(email);
         user.setDisplayName(displayName);
+        user.setAvatar("http://avatars.yandex.net/get-yapic/" + id + "/islands-middle");
         user.saveIt();
 
         return user;

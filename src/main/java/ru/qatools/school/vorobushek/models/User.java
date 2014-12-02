@@ -34,6 +34,14 @@ public class User extends Model {
         setString("displayName", displayName);
     }
 
+    public String getAvater(){
+        return getString("avatar");
+    }
+
+    public void setAvatar(String avatar){
+        setString("avatar", avatar);
+    }
+
     @Override
     public int hashCode(){
         return getLogin().hashCode()
