@@ -9,7 +9,6 @@
     <script src="/public/jquery/js/jquery.min.js" type="text/javascript"></script>
     <link href="/public/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <script src="/public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-
     <link href="/public/app/css/main.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
@@ -25,7 +24,7 @@
                         <li>
 
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${userName} <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>&nbsp; ${userName} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href=${yandexLoginUrl}>Profile</a></li>
                                     <li class="divider"></li>

@@ -100,6 +100,14 @@ public class UserContext {
         return post;
     }
     
+    public void deleteComment(String id) {
+        if (currentUser == null){
+            throw new NotAuthorizedException(dineAccessMessage);
+        }
+
+        Comment.delete("id = ?", id);
+    }
+    
     public List<Post> getPosts(){
         List<Post> postList = Post.findAll().orderBy("created_at desc");
 
@@ -140,5 +148,9 @@ public class UserContext {
 
     public static String getCurrentProjectVersion(){
         return currentProjectVersion;
+    }
+    
+    public User getUser() {
+        return currentUser;
     }
 }

@@ -42,7 +42,7 @@ public class PostResources {
     @Path("/{id}/showComments")
     @Template(name = "/post/showPost.ftl")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public UserContext addComment(  @PathParam("id") String postId,
+    public UserContext addComment(@PathParam("id") String postId,
                                     @FormParam("commentBody") String commentBody) {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
@@ -57,6 +57,20 @@ public class PostResources {
         }
 
         return userContext;
+    }
+    
+    @POST
+    @Path("/{id}/deleteComment")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response deleteComment(@PathParam("id") String commentId) {
+
+        UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
+        
+        if (userContext.hasUser()) {
+            userContext.deleteComment(commentId);
+        }
+
+        return javax.ws.rs.core.Response.seeOther(URI.create("/post/" + userContext.getLastShownPost().getId() + "/showComments")).build();
     }
     
     @GET
