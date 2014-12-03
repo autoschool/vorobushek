@@ -30,7 +30,7 @@
         <dbUrl>jdbc:mysql://${dbHost}/vorobushek_test</dbUrl>
         <dbUser>vorobushek_test</dbUser>
         <dbPass>dbPass</dbPass>
-        <yandexCliendId>1f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
+        <yandexCliendId>f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
         <yandexCliendSecret>yandexCliendSecret</yandexCliendSecret>
         <yandexSpeechKitKey>yandexSpeechKitKey</yandexSpeechKitKey>
     </properties>
