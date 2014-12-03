@@ -30,52 +30,51 @@ import static java.nio.file.Files.createTempDirectory;
 @Provider
 public class DatabaseProvider implements ContainerRequestFilter {
 
-    public static final String YANDEX_CLIEND_ID;
-    public static final String YANDEX_CLIEND_SECRET;
+    private static String YANDEX_CLIEND_ID = null;
+    private static String YANDEX_CLIEND_SECRET = null;
+    private static String YANDEX_SPEECHKIT_KEY = null;
+    private static String PROJECT_NUBER_BUILD  = null;
 
-    private static String dbUrl;
-
-
-    private static final String DBUSER = "sa";
-    private static final String USER_CONTEXT_ATTRIBUTE_NAME;
+    private static String DBDRIVER = null;
+    private static String DBUSER = null;
+    private static String DBPASS = null;
+    private static String DBURL = null;
+    private static String USER_CONTEXT_ATTRIBUTE_NAME = null;
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseProvider.class);
-    private static final String YANDEX_TOKEM_URL;
+    private static String YANDEX_TOKEN_URL = null;
 
     static {
-        try {
-            dbUrl = format("jdbc:h2:mem:%s/%s,user=%s", getDbPath(), getDbName(), DBUSER);
-            LOGGER.info(format("Starting embedded database with url '%s' ...", dbUrl));
-            openConnection();
-            Flyway flyway = new Flyway();
-            flyway.setDataSource(dbUrl, DBUSER, null);
-            flyway.migrate();
-        } catch (Exception e) {
-            LOGGER.error("Failed to start embedded database", e);
-        }
-
         Properties prop = new Properties();
-        
+
         try(InputStream inputStream = DatabaseProvider.class.getResourceAsStream("/application.properties")) {
             prop.load(inputStream);
         }
         catch ( IOException e ) {
             LOGGER.error( e.getMessage(), e );
         }
+
+        try {
+            YANDEX_TOKEN_URL = "http://oauth.yandex.ru/token";
+            USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
+            DBURL = prop.getProperty("dbUrl");
+            DBUSER = prop.getProperty("dbUser");
+            DBPASS = prop.getProperty("dbPass");
+            DBDRIVER = prop.getProperty("dbDriver");
+            YANDEX_CLIEND_ID = prop.getProperty("yandexCliendId");
+            YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
+            YANDEX_SPEECHKIT_KEY = prop.getProperty("yandexSpeechKitKey");
+            PROJECT_NUBER_BUILD = prop.getProperty("build.number");
+
+            LOGGER.info(format("Starting mysql database with url '%s' ...", DBURL));
+            openConnection();
+            Flyway flyway = new Flyway();
+            flyway.setDataSource(DBURL, DBUSER, DBPASS);
+            flyway.migrate();
+        } catch (Exception e) {
+            LOGGER.error("Failed to start embedded database", e);
+        }
         
 
-        YANDEX_CLIEND_ID = prop.getProperty("yandexCliendId");
-        YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
-
-        YANDEX_TOKEM_URL = "http://oauth.yandex.ru/token";
-        USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
-    }
-
-    private static String getDbName() {
-        return getProperty("db.name", "default");
-    }
-
-    private static String getDbPath() throws IOException {
-        return getProperty("db.path", createTempDirectory("blog").toAbsolutePath().toString());
     }
 
     public static String getProperty(String key, String defaultValue) {
@@ -141,7 +140,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     public static void openConnection() {
         if (!Base.hasConnection()) {
-            Base.open(org.h2.Driver.class.getName(), dbUrl, DBUSER, "");
+            Base.open(DBDRIVER, DBURL, DBUSER, DBPASS);
         }
     }
 
@@ -160,7 +159,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
         RequestBody bodyForToken = RequestBody.create(bodyTypeForToken, bodyTextForToken);
         Request requestForToken = new Request.Builder()
-                .url(YANDEX_TOKEM_URL)
+                .url(YANDEX_TOKEN_URL)
                 .post(bodyForToken)
                 .build();
 
@@ -221,6 +220,12 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public static void  setUserContext(HttpServletRequest httpRequest, UserContext userContext){
         httpRequest.getSession().setAttribute(USER_CONTEXT_ATTRIBUTE_NAME, userContext);
     }
+
+    public static String getYandexSpeechKitKey(){ return YANDEX_SPEECHKIT_KEY; }
+
+    public static String getYandexClientId() { return YANDEX_CLIEND_ID; }
+
+    public static String getProjectBuildNumber() { return PROJECT_NUBER_BUILD; }
 
     @Override
     public void filter(ContainerRequestContext requestContext) {

@@ -40,22 +40,6 @@ public class IndexResource {
     @Path("/")
     @Template(name = "/index.ftl")
     public UserContext showIndex(){
-
-        if (UserContext.getCurrentProjectVersion() == null) {
-            ServletContext aContext = httpRequest.getSession().getServletContext();
-            InputStream inputStream = aContext.getResourceAsStream("/META-INF/MANIFEST.MF");
-
-            try {
-                Manifest manifest = new Manifest(inputStream);
-                manifest.read(inputStream);
-                Attributes attributes = manifest.getMainAttributes();
-                String currentVersion = attributes.getValue("Implementation-Version");
-                UserContext.setCurrentProjectVersion(currentVersion);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         return DatabaseProvider.getUserContext(httpRequest);
     }
 

@@ -15,32 +15,6 @@
         <developerConnection>scm:git:git@github.com:autoschool/vorobushek.git</developerConnection>
     </scm>
 
-    <profiles>
-        <profile>
-            <id>Default</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
-                <properties>
-                    <yandexCliendId>17c735ef06644350b6b9fabc0ae467ed</yandexCliendId>
-                    <yandexCliendSecret>91928eb427e54e84a09d57b7f7eeda89</yandexCliendSecret>
-                </properties>
-        </profile>
-        <profile>
-            <id>Production</id>
-            <properties>
-                <yandexCliendId>5c64427a5ed34bc69846371b4bfc4cdd</yandexCliendId>
-                <yandexCliendSecret>9b91b40b9f1442ea8b63ebd81cc0e01a</yandexCliendSecret>
-            </properties>
-        </profile>
-        <profile>
-            <id>Testing</id>
-                <properties>
-                    <yandexCliendId>f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
-                    <yandexCliendSecret>a5842489330e492ba01e9c9394f1c8cb</yandexCliendSecret>
-                </properties>
-        </profile>
-    </profiles>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -51,6 +25,14 @@
         <build.number>SNAPSHOT</build.number>
         <aspectj.version>1.8.4</aspectj.version>
         <allure.version>1.4.4</allure.version>
+        <dbDriver>com.mysql.jdbc.Driver</dbDriver>
+        <dbHost>dbHost</dbHost>
+        <dbUrl>jdbc:mysql://${dbHost}/vorobushek_test</dbUrl>
+        <dbUser>vorobushek_test</dbUser>
+        <dbPass>dbPass</dbPass>
+        <yandexCliendId>1f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
+        <yandexCliendSecret>yandexCliendSecret</yandexCliendSecret>
+        <yandexSpeechKitKey>yandexSpeechKitKey</yandexSpeechKitKey>
     </properties>
 
     <dependencies>
@@ -86,6 +68,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.17</version>
         </dependency>
 
         <!-- TEST -->
@@ -261,6 +248,26 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <url>jdbc:mysql://128.199.43.103:3306/vorobushek_test</url>
+                    <user>vorobushek_test</user>
+                    <password>meS1ven9Vor7aN8b</password>
+                    <schemas>
+                        <schema>vorobushek_test</schema>
+                    </schemas>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.17</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>

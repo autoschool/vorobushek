@@ -11,28 +11,38 @@ import java.util.List;
  */
 public class UserContext {
 
-    private final String dineAccessMessage;
+    private String dineAccessMessage;
 
     private final User currentUser;
 
     private Post lastShownPost;
     private Post lastEditedPost;
 
-    private static String currentProjectVersion;
+    private String currentProjectVersion;
+    private String yandexSpeechKitKey;
+    private String yandexClientId;
+
+
+    private void initContextVariables(){
+        currentProjectVersion = DatabaseProvider.getProjectBuildNumber();
+        yandexSpeechKitKey = DatabaseProvider.getYandexSpeechKitKey();
+        yandexClientId = DatabaseProvider.getYandexClientId();
+        dineAccessMessage = "You Don't Have Permission";
+    }
 
     public UserContext(String token) {
         currentUser = DatabaseProvider.getYandexUser(token);
-        dineAccessMessage = "You Don't Have Permission";
+        initContextVariables();
     }
 
     public UserContext(User tester) {
         currentUser = tester;
-        dineAccessMessage = "You Don't Have Permission";
+        initContextVariables();
     }
 
     public UserContext() {
         currentUser = null;
-        dineAccessMessage = "You Don't Have Permission";
+        initContextVariables();
     }
 
 
@@ -44,7 +54,7 @@ public class UserContext {
 
         return currentUser == null
                 ? ""
-                : currentUser.getDisplayName();
+                : currentUser.getLogin();
     }
 
     public Post createPost(String postTitle, String postBody) {
@@ -125,7 +135,7 @@ public class UserContext {
 
     public String getUserUrl(){
         return currentUser == null
-               ? "https://oauth.yandex.ru/authorize?response_type=code&client_id=" + DatabaseProvider.YANDEX_CLIEND_ID
+               ? "https://oauth.yandex.ru/authorize?response_type=code&client_id=" + yandexClientId
                : "https://passport.yandex.ru/passport?mode=passport";
     }
 
@@ -145,13 +155,11 @@ public class UserContext {
         this.lastShownPost = Post.findById(id);
     }
 
-    public static void setCurrentProjectVersion(String version){
-        currentProjectVersion = version;
-    }
-
-    public static String getCurrentProjectVersion(){
+    public String getCurrentProjectVersion(){
         return currentProjectVersion;
     }
+
+    public String getYandexSpeechKitKey() { return yandexSpeechKitKey; }
     
     public User getUser() {
         return currentUser;
