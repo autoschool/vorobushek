@@ -254,9 +254,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <url>jdbc:mysql://128.199.43.103:3306/vorobushek_test</url>
-                    <user>vorobushek_test</user>
-                    <password>meS1ven9Vor7aN8b</password>
+                    <url>${dbUrl}}</url>
+                    <user>${dbUser}t</user>
+                    <password>${dbPass}</password>
                     <schemas>
                         <schema>vorobushek_test</schema>
                     </schemas>
