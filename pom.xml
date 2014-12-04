@@ -27,7 +27,7 @@
         <allure.version>1.4.4</allure.version>
         <dbDriver>com.mysql.jdbc.Driver</dbDriver>
         <dbHost>dbHost</dbHost>
-        <dbUrl>jdbc:mysql://${dbHost}/vorobushek_test</dbUrl>
+        <dbUrl>jdbc:mysql://${dbHost}/vorobushek_test?useUnicode=true&amp;characterEncoding=utf8</dbUrl>
         <dbUser>vorobushek_test</dbUser>
         <dbPass>dbPass</dbPass>
         <yandexCliendId>f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
