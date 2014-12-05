@@ -69,7 +69,10 @@
                     function(msg) {console.log(msg); alert(msg);},
                     function(text, uttr, merge) {
                         if (uttr) {
-                            $('#new-post-body-textarea').append(' ' + text);
+
+                            var val = $('#new-post-body-textarea').val();
+                            $('#new-post-body-textarea').val(val + ' ' + text);
+
                         }
                         $('#content_curr').html(text);
 

@@ -52,7 +52,8 @@
                         function(msg) {console.log(msg); alert(msg);},
                         function(text, uttr, merge) {
                             if (uttr) {
-                                $('#new-post-body-textarea').append(' ' + text);
+                                var val = $('#edit-body-textarea').val();
+                                $('#edit-body-textarea').val(val + ' ' + text);
                             }
                             $('#content_curr').html(text);
 
