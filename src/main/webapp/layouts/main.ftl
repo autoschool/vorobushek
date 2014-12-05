@@ -39,7 +39,7 @@
                     <div class="navbar-header navbar-left">
                         <ul class="nav navbar-nav">
                             <li class="active"><a id="home-link" href="/">Home<span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">About</a></li>
+                            <li><a href="https://github.com/autoschool/vorobushek">About</a></li>
                         </ul>
                     </div>
                 </div>
