@@ -57,6 +57,10 @@ public class UserContext {
                 : currentUser.getLogin();
     }
 
+    public User getCurrentUser(){
+        return currentUser;
+    }
+
     public Post createPost(String postTitle, String postBody) {
 
         if (currentUser == null){
