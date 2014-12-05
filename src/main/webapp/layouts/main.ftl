@@ -68,6 +68,5 @@
     </div>
 </div>
 </body>
-</#macro>
-</body>
 </html>
+</#macro>

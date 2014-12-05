@@ -18,10 +18,50 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" id="save-button" class="btn btn-danger pull-right">Save</button>
+                        <button type="button" class="btn btn-danger" id="recordButton">
+                            Record
+                        </button>
+                        <button type="button" class="btn btn-danger" id="stopButton">
+                            Stop
+                        </button>
+                        <span class="interim" id="content_curr"></span>
+                        <button type="submit" id="save-button" class="btn btn-primary pull-right">Save</button>
                     </div>
                 </div>
             </form>
         </div>
+
+        <script>
+            var uuid = '${model.getYandexSpeechKitKey()}'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            });
+
+            var key = '${model.getYandexSpeechKitKey()}'
+
+            var dict = new webspeechkit.Dictation("wss://webasr.yandex.net/asrsocket.ws", uuid, key);
+
+
+            recordButton.onclick = function() {
+                var format = webspeechkit.FORMAT["PCM16"];
+
+                $('#new-post-body-textarea').html('');
+                $('#content_curr').html('');
+                dict.start(format,
+                        function(){},
+                        function(msg) {console.log(msg); alert(msg);},
+                        function(text, uttr, merge) {
+                            if (uttr) {
+                                $('#new-post-body-textarea').append(' ' + text);
+                            }
+                            $('#content_curr').html(text);
+
+                        },
+                        function(info) {}
+                );
+            };
+
+            stopButton.onclick = dict.stop;
+        </script>
 </div>
 </@layout.layout>
