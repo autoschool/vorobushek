@@ -6,10 +6,10 @@
     <title>Vorobushek</title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="/public/jquery/js/jquery.min.js" type="text/javascript"></script>
-    <script src="/public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="http://yastatic.net/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/public/ysk/js/webspeechkit.min.js" type="text/javascript"></script>
-    <link href="/public/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://yastatic.net/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <link href="/public/app/css/main.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
