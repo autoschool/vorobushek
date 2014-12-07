@@ -10,7 +10,6 @@
     <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/public/ysk/js/webspeechkit.min.js" type="text/javascript"></script>
     <link href="http://yastatic.net/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-
 </head>
 <body style="background: url(/public/app/img/background.png); padding-top: 70px">
 
