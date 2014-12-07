@@ -1,68 +1,36 @@
 <#-- @ftlvariable name="model" type="ru.qatools.school.vorobushek.models.UserContext" -->
 <#import "layouts/main.ftl" as layout />
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
-<div class="row">
-    <div class="col-md-12">
-        <div class="page-header">
-            <h2>All Posts</h2>
+
+<div class="list-group">
+    <#list model.getPosts() as post>
+       <#---->
+
+        <div class="well">
+            <#if post.getCanEdit()>
+
+                <a class="btn btn-warning btn-sm pull-right" href="/post/${post.id}/edit" role="button">Edit</a>
+
+                <form class="form" method="POST" action="/post/${post.id}/delete">
+                    <button type="submit" id="delete-button-${post.id}" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+
+            </#if>
+            <a class="list-group-item well" href="/post/${post.id}/showComments" >
+                <img src="${post.user.avater}" class="img-circle img-responsive center-block" alt="Responsive image">
+
+                <blockquote class="blockquote-reverse">
+                    <p class="postBody">${post.body}</p>
+                    <footer><cite>${post.user.displayName}</cite></footer>
+                </blockquote>
+
+                <p>Update on ${post.createdAt}</span></p>
+                <p>Comments <span class="badge">${post.getCommentsCount()}</span></p>
+            <#---->
+            </a>
         </div>
-        <#list model.getPosts() as post>
-           <#---->
 
-
-                <div >
-                    <#--<h1 class="panel-title"><a href="/post/${post.id}/showComments" id="${post.id}">${post.title}</a></h1>-->
-                </div>
-
-                <div >
-                    <div class="container-fluid">
-                        <div class="row" style="height: auto">
-                            <div class="col-sm-11">
-                                <blockquote class="blockquote-reverse">
-                                    <p>${post.body}</p>
-                                    <footer><cite title="Source Title">${post.user.displayName}</cite></footer>
-                                </blockquote>
-                            </div>
-                            <div class="col-sm-1">
-                                <img src="${post.user.avater}" class="img-circle" alt="Responsive image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div >
-                    <div class="container-fluid">
-                        <div class="row" style="height: auto">
-                            <div class="col-sm-8 pull-left">
-                                <#--<div    class="pull-left">-->
-                                    <div>
-                                        Update on ${post.createdAt}</span>
-                                    </div>
-                                    <div>
-                                        <span class="badge"><a href="/post/${post.id}/showComments">${post.getCommentsCount()} comments</a></span>
-                                    </div>
-                                <#--</div>-->
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="pull-right">
-                                    <#if post.getCanEdit()>
-                                        <form class="navbar-form navbar-right" method="GET" action="/post/${post.id}/edit">
-                                            <button type="submit" id="edit-button-${post.id}" class="btn btn-warning">Edit</button>
-                                        </form>
-                                        <form class="navbar-form navbar-right" method="POST" action="/post/${post.id}/delete">
-                                            <button type="submit" id="delete-button-${post.id}" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </#if>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            <hr style="border-color: #333333">
-
-        </#list>
-    </div>
+    </#list>
 </div>
+
 </@layout.layout>
