@@ -2,7 +2,7 @@
 <#import "../layouts/main.ftl" as layout />
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <head>
-    <link href="/public/app/css/showPost.css" type="text/css" rel="stylesheet"/>
+
 </head>
 
     <div class="page-header">
@@ -10,35 +10,40 @@
         <span class="badge">${model.getLastShownPost().getCommentsCount()} Comments</span>
     </div>
     <div class="blockquote-reverse">
-        <p id="post-body">${model.getLastShownPost().getBody()}</p>
+        <p id="post-body" class="panael">${model.getLastShownPost().getBody()}</p>
         <footer><cite title="Source Title">${model.getLastShownPost().user.displayName}</cite></footer>
     </div>
 
-        <#list model.getLastShownPost().comments as comment>
-            <div class="well">
-                <div class="row" style="height: auto">
-                    <div class="col-sm-10">
-                        <div>
-                            <img src="${comment.user.avater}" class="img-circle" alt="Responsive image">
-                            <span class="label label-info">${comment.user.displayName}</span>
-                         </div>
 
-                        <div>
-                            ${comment.body}
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <#if comment.getUser().equals(model.getCurrentUser())>
-                            <form class="form" role="form" method="POST" action="/post/${comment.getId()}/deleteComment">
-                                <button type="submit" class="btn btn-default" id="button-remove">
-                                    <span class="glyphicon glyphicon-remove" id="glyphicon-remove"></span>
-                                </button>
-                            </form>
-                        </#if>
-                    </div>
+
+    <p class="list-group">
+        <#list model.getLastShownPost().comments as comment>
+            <div class="list-group-item">
+
+                <div>
+                    <img src="${comment.user.avater}" class="img-circle" alt="Responsive image">
+                    <span class="label label-info">${comment.user.displayName}</span>
+                 </div>
+                <div>
+                    <p>
+                        ${comment.body}
+                    </p>
                 </div>
+
+
+
+                <#if comment.getUser().equals(model.getCurrentUser())>
+                    <form class="form" role="form" method="POST" action="/post/${comment.getId()}/deleteComment">
+                        <button type="submit" class="btn btn-danger btn-sm" id="button-remove">
+                            Delete comment
+                        </button>
+                    </form>
+                </#if>
+
             </div>
         </#list>
+    </p>
+
 
     <#if model.hasUser()>
         <form class="form" role="form" method="POST" action="showComments">
