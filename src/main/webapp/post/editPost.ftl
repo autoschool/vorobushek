@@ -43,7 +43,7 @@
 
 
             recordButton.onclick = function() {
-                var format = webspeechkit.FORMAT["PCM16"];
+                var format = webspeechkit.FORMAT.PCM44;
 
                 $('#new-post-body-textarea').html('');
                 $('#content_curr').html('');

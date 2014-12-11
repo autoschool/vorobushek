@@ -29,6 +29,11 @@
                         <button type="button" class="btn btn-danger" id="stopButton">
                             Stop
                         </button>
+
+                        <#--<h2>Recordings</h2>-->
+                        <#--<ul id="recordingslist"></ul>-->
+
+
                         <#--<div class="btn-group" data-toggle="buttons">-->
                             <#--<label class="btn btn-primary active">-->
                                 <#--<input type="radio" name="rec" id="stopRec" autocomplete="off" checked> Stop-->
@@ -60,7 +65,7 @@
 
 
         recordButton.onclick = function() {
-            var format = webspeechkit.FORMAT["PCM16"];
+            var format = webspeechkit.FORMAT.PCM44;
 
             $('#new-post-body-textarea').html('');
             $('#content_curr').html('');
@@ -81,7 +86,29 @@
             );
         };
 
-        stopButton.onclick = dict.stop;
+//        function createDownloadLink() {
+//
+//            dict.recorder && dict.recorder.exportWAV(function(blob) {
+//                var url = URL.createObjectURL(blob);
+//                var li = document.createElement('li');
+//                var au = document.createElement('audio');
+//                var hf = document.createElement('a');
+//
+//                au.controls = true;
+//                au.src = url;
+//                hf.href = url;
+//                hf.download = new Date().toISOString() + '.wav';
+//                hf.innerHTML = hf.download;
+//                li.appendChild(au);
+//                li.appendChild(hf);
+//                recordingslist.appendChild(li);
+//            });
+//        }
+
+        stopButton.onclick = function(){
+            dict.stop;
+//            createDownloadLink();
+        }
     </script>
 
 </div>
