@@ -80,7 +80,7 @@
 
                         }
                         $('#content_curr').html(text);
-
+                        console.log(text);
                     },
                     function(info) {}
             );
@@ -105,10 +105,9 @@
 //            });
 //        }
 
-        stopButton.onclick = function(){
-            dict.stop;
+        stopButton.onclick = dict.stop;
 //            createDownloadLink();
-        }
+
     </script>
 
 </div>
