@@ -80,7 +80,7 @@
 
                         }
                         $('#content_curr').html(text);
-                        console.log(text);
+                        //console.log(text);
                     },
                     function(info) {}
             );
