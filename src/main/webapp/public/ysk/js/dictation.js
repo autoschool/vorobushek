@@ -4,6 +4,7 @@ window.webspeechkit.Dictation = function(asr_url, uuid, apikey) {
         backref.send_bytes = 0;
         backref.proc = 0;
 
+
         backref.webSocketPath = function(){
             if ((asr_url.indexOf("wss://")==0) || (asr_url.indexOf("ws://")==0))
                 return asr_url;
