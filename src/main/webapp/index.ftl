@@ -6,7 +6,7 @@
     <#list model.getPosts() as post>
        <#---->
 
-        <div class="well" style="background-color: hsla(${post.getFreq()},60%,60%,0.3)}">
+        <div class="well">
             <#if post.getCanEdit()>
 
                 <a class="btn btn-warning btn-sm pull-right" href="/post/${post.id}/edit" role="button">Edit</a>
@@ -16,7 +16,7 @@
                 </form>
 
             </#if>
-            <a class="list-group-item well" href="/post/${post.id}/showComments">
+            <a class="list-group-item well" href="/post/${post.id}/showComments" style="background-color: hsla(${post.getFreq()},60%,60%,0.3)}">
                 <img src="${post.user.avater}" class="img-circle img-responsive center-block" alt="Responsive image">
 
                 <blockquote class="blockquote-reverse">

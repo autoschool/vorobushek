@@ -5,11 +5,11 @@
 
 </head>
 
-    <div class="page-header">
-        <h2 id="post-title">${model.getLastShownPost().getTitle()}</h2>
+    <div class="page-header" >
+        <h2 id="post-title" style="background-color: hsla(${model.getLastShownPost().getFreq()},60%,60%,0.3)}">${model.getLastShownPost().getTitle()}</h2>
         <span class="badge">${model.getLastShownPost().getCommentsCount()} Comments</span>
     </div>
-    <div class="blockquote-reverse">
+    <div class="blockquote-reverse"  style="background-color: hsla(${model.getLastShownPost().getFreq()},60%,60%,0.3)}">
         <p id="post-body" class="panael">${model.getLastShownPost().getBody()}</p>
         <footer><cite title="Source Title">${model.getLastShownPost().user.displayName}</cite></footer>
     </div>
@@ -18,7 +18,7 @@
 
     <p class="list-group">
         <#list model.getLastShownPost().comments as comment>
-            <div class="list-group-item">
+            <div class="list-group-item well">
 
                 <div>
                     <img src="${comment.user.avater}" class="img-circle" alt="Responsive image">
