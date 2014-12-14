@@ -1,13 +1,11 @@
-importScripts("./speex.min.js"); 
-
 var recLength = 0,
   recBuffersL = [],
   recBuffersR = [],
   sampleRate,
   outSampleRate;
 var tmp_buf = 0;
-var need_buf_size = 4096;
-var speex_converter = null;
+var need_buf_size = 8192;//4096;
+
 
 this.onmessage = function(e){
   switch(e.data.command){
@@ -36,10 +34,6 @@ function init(config){
   sampleRate = config.sampleRate;
   outSampleRate = config.format.samplerate || sampleRate;
   need_buf_size = config.bufSize || 4096;
-  if (config.format.format == "speex") {
-        need_buf_size /= 16;
-        speex_converter = new SpeexConverter(outSampleRate);
-  }
 }
 
 function record(inputBuffer){
@@ -88,12 +82,8 @@ function record(inputBuffer){
         for (var i = 0 ; i < resin0.length ; i++) {
             result[i] = Math.ceil((resin0[i] + resin1[i]) * 16383);
         }
-        result = result;
 
-        if (speex_converter)
-            result = speex_converter.convert(result);
-        else
-            result = result.buffer;
+        result = result.buffer;
       
         if (!tmp_buf) {
             tmp_buf = result;
@@ -149,8 +139,6 @@ function clear(){
   recLength = 0;
   recBuffersL = [];
   recBuffersR = [];
-  if (speex_converter)
-    speex_converter.clear();
   this.postMessage({command: 'clear'});
 }
 

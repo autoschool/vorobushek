@@ -40,6 +40,7 @@ window.webspeechkit.Dictation = function(asr_url, uuid, apikey) {
             backref.send = 0;
             backref.send_bytes = 0;
             backref.proc = 0;
+            backref.maxFreq = 0;
 
 
             backref.recorder = new webspeechkit.Recorder(backref.bufsize, 1, function(){
@@ -61,7 +62,8 @@ window.webspeechkit.Dictation = function(asr_url, uuid, apikey) {
                                     send_bytes: backref.send_bytes,
                                     format: format,
                                     send_packages: backref.send,
-                                    processed: backref.proc
+                                    processed: backref.proc,
+                                    maxFreq: backref.recorder.getMaxFreq()
                                     });
                         backref.recognizer.addData(data);
                     }, format)

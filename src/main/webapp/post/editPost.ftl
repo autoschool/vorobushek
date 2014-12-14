@@ -2,9 +2,9 @@
 <#import "../layouts/main.ftl" as layout />
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
-        <div class="page-header">
-            <h2>Edit post</h2>
-        </div>
+        <#--<div class="page-header">-->
+            <#--<h2>Edit post</h2>-->
+        <#--</div>-->
         <div class="col-md-12">
             <form class="form" role="form" method="POST" action="edit">
                 <div class="page-header">
@@ -58,7 +58,9 @@
                             $('#content_curr').html(text);
 
                         },
-                        function(info) {}
+                        function(info) {
+                            $('#save-button').css('backgroundColor','hsla(' + info.maxFreq + ',60%,60%,0.3)');
+                        }
                 );
             };
 

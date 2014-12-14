@@ -6,9 +6,9 @@
     <title>Vorobushek</title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <script src="http://yastatic.net/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
     <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-    <#--<script src="/public/ysk/js/webspeechkit.min.js" type="text/javascript"></script>-->
     <link href="http://yastatic.net/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 
     <script src="/public/ysk/js/recorder.js" type="text/javascript"></script>
@@ -16,7 +16,7 @@
     <script src="/public/ysk/js/dictation.js" type="text/javascript"></script>
 
 </head>
-<body style="background: url(/public/app/img/background.png); padding-top: 70px">
+<body style="background: url(/public/app/img/background.jpg); background-attachment: fixed; padding-top: 70px">
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">

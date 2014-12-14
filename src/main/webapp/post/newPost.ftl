@@ -3,9 +3,9 @@
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
     <#if model.hasUser()>
-        <div class="page-header">
-            <h2>Create new post</h2>
-        </div>
+        <#--<div class="page-header">-->
+            <#--<h2>Create new post</h2>-->
+        <#--</div>-->
         <div class="col-md-12">
             <form class="form" role="form" method="POST" action="new" >
                 <div class="page-header">
@@ -19,30 +19,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button id="save-post-button" type="submit" class="btn btn-primar pull-right">Save</button>
-                        <#--<button type="button" id="recordButton" data-loading-text="Recording..." class="btn btn-primary" autocomplete="off">-->
-                            <#--Record-->
-                        <#--</button>-->
+                        <button id="save-post-button" type="submit" class="btn btn-primar pull-right" name="saveButton">Save</button>
                         <button type="button" class="btn btn-danger" id="recordButton">
                             Record
                         </button>
                         <button type="button" class="btn btn-danger" id="stopButton">
                             Stop
                         </button>
-
-                        <#--<h2>Recordings</h2>-->
-                        <#--<ul id="recordingslist"></ul>-->
-
-
-                        <#--<div class="btn-group" data-toggle="buttons">-->
-                            <#--<label class="btn btn-primary active">-->
-                                <#--<input type="radio" name="rec" id="stopRec" autocomplete="off" checked> Stop-->
-                            <#--</label>-->
-                            <#--<label class="btn btn-primary ">-->
-                                <#--<input type="radio" name="rec" id="startRec" autocomplete="off" > Record-->
-                            <#--</label>-->
-                        <#--</div>-->
-                        <span class="interim" id="content_curr"></span>
+                        <p><span class="interim" id="content_curr"></span></p>
                     </div>
                 </div>
             </form>
@@ -63,12 +47,27 @@
 
         var dict = new webspeechkit.Dictation("wss://webasr.yandex.net/asrsocket.ws", uuid, key);
 
-
         recordButton.onclick = function() {
+
+//            for get location (in future)
+//            if (navigator.geolocation) {
+//                navigator.geolocation.getCurrentPosition(showPosition);
+//            }
+//            else{
+//                console.log('no geo')
+//            }
+//            function showPosition(position) {
+//                console.log(position.coords.latitude);
+//                console.log(position.coords.longitude);
+//            }
+
             var format = webspeechkit.FORMAT.PCM16;
 
             $('#new-post-body-textarea').html('');
             $('#content_curr').html('');
+
+
+
             dict.start(format,
                     function(){},
                     function(msg) {console.log(msg); alert(msg);},
@@ -80,33 +79,15 @@
 
                         }
                         $('#content_curr').html(text);
-                        //console.log(text);
                     },
-                    function(info) {}
+                    function(info) {
+                        $('#save-post-button').css('backgroundColor','hsla(' + info.maxFreq + ',60%,60%,0.3)');
+                        $('#save-post-button').val(info.maxFreq);
+                    }
             );
         };
 
-//        function createDownloadLink() {
-//
-//            dict.recorder && dict.recorder.exportWAV(function(blob) {
-//                var url = URL.createObjectURL(blob);
-//                var li = document.createElement('li');
-//                var au = document.createElement('audio');
-//                var hf = document.createElement('a');
-//
-//                au.controls = true;
-//                au.src = url;
-//                hf.href = url;
-//                hf.download = new Date().toISOString() + '.wav';
-//                hf.innerHTML = hf.download;
-//                li.appendChild(au);
-//                li.appendChild(hf);
-//                recordingslist.appendChild(li);
-//            });
-//        }
-
         stopButton.onclick = dict.stop;
-//            createDownloadLink();
 
     </script>
 

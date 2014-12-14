@@ -33,7 +33,7 @@
     return function(bufferSize, channelCount, onError, workerPath, outSampleRate)
     {
         var backref = this;
-        this.bufferLen = 4096;//bufferSize || 4096;
+        this.bufferLen = 8192;//4096;//bufferSize || 4096;
         this.channelCount = 1;//Math.max(1, Math.min(channelCount || 2, 2)); // 1 or 2, defaults to 2
         this.context = new AudioContext();
         this.outSampleRate = outSampleRate || this.context.sampleRate
@@ -49,7 +49,12 @@
 //        }
 
         this.audioInput = this.context.createMediaStreamSource(stream);
+        var analyserNode = this.context.createAnalyser();
+        analyserNode.fftSize = 256;
+
 //        this.audioInput.connect(this.inputPoint);
+
+
 
         if(!this.context.createScriptProcessor){
             this.node = this.context.createJavaScriptNode(this.bufferLen, 2, this.channelCount);
@@ -71,6 +76,8 @@
         var currCallback;
         var buffCallback;
         var startCallback;
+        var maxFreq = 0;
+
 
         this.node.onaudioprocess = function(e){
 
@@ -83,19 +90,33 @@
                     e.inputBuffer.getChannelData(1)
                 ]
             });
+
+            var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+            analyserNode.getByteFrequencyData(freqByteData);
+
+            for(var i = 0; i < freqByteData.length; i++){
+                if(freqByteData[i]>0 && i>maxFreq)
+                    maxFreq = i;
+            }
+
+//            console.log(maxFreq);
+        }
+
+        this.getMaxFreq = function(){
+            return maxFreq;
         }
 
         
-        this.getAudioContext = function() {
-            return this.context;
-        }
+//        this.getAudioContext = function() {
+//            return this.context;
+//        }
 
-        this.getAnalyserNode = function() {
-            var analyserNode = this.context.createAnalyser();
-            analyserNode.fftSize = 2048;
-            this.inputPoint.connect(analyserNode);
-            return analyserNode;
-        }
+//        this.getAnalyserNode = function() {
+//            var analyserNode = this.context.createAnalyser();
+//            analyserNode.fftSize = 2048;
+//            this.audioInput.connect(analyserNode);
+//            return analyserNode;
+//        }
 
 
         this.start = function(cb, format) {
@@ -121,9 +142,9 @@
             );
         }
 
-        this.isRecording = function(){
-            return recording;
-        }
+//        this.isRecording = function(){
+//            return recording;
+//        }
 
         this.clear = function(cb){
             currCallback = cb;
@@ -167,6 +188,7 @@
             }
         }
 
+        this.audioInput.connect(analyserNode);
         this.audioInput.connect(this.node);
         this.node.connect(this.context.destination);
     }
