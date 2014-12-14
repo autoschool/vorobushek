@@ -6,7 +6,7 @@
 </head>
 
     <div class="page-header" >
-        <h2 id="post-title" style="background-color: hsla(${model.getLastShownPost().getFreq()},60%,60%,0.3)}">${model.getLastShownPost().getTitle()}</h2>
+        <h2 id="post-title" style="color: #ffffff">${model.getLastShownPost().getTitle()}</h2>
         <span class="badge">${model.getLastShownPost().getCommentsCount()} Comments</span>
     </div>
     <div class="blockquote-reverse"  style="background-color: hsla(${model.getLastShownPost().getFreq()},60%,60%,0.3)}">
