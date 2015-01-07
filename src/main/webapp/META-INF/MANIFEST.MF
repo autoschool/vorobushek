@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: Apache Maven
-Build-Jdk: 1.7.0_71
-Implementation-Title: vorobushek
-Implementation-Vendor-Id: ru.qatools.school.vorobushek
-Implementation-Version: SNAPSHOT
-Specification-Title: vorobushek
-Specification-Version: 1.0-SNAPSHOT
-
