@@ -30,7 +30,7 @@
             </button>
             <a class="navbar-brand" href="/">
                 <p>
-                    <img src="/public/app/img/sparow-48x28.png" class="img-circle"> Vorobushek (${model.getCurrentProjectVersion()})
+                    <img src="/public/app/img/sparow-48x48.png" class="img-circle"> Vorobushek (${model.getCurrentProjectVersion()})
                 </p>
             </a>
         </div>
