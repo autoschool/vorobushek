@@ -96,7 +96,7 @@ public class PostResources {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (postTitle.isEmpty() || postBody.isEmpty()){
+        if (postBody.isEmpty()){
             userContext.setLastShownPost(postId);
             return userContext;
         }
@@ -141,7 +141,7 @@ public class PostResources {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (postTitle.isEmpty() || postBody.isEmpty()){
+        if (postBody.isEmpty()){
             return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
         }
         

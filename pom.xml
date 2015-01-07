@@ -33,6 +33,7 @@
         <yandexCliendId>f3a26fd6ca0d4ed08515f1a349c39b36</yandexCliendId>
         <yandexCliendSecret>yandexCliendSecret</yandexCliendSecret>
         <yandexSpeechKitKey>yandexSpeechKitKey</yandexSpeechKitKey>
+        <testingMode>false</testingMode>
     </properties>
 
     <dependencies>

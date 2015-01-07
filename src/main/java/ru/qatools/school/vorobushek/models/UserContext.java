@@ -35,8 +35,8 @@ public class UserContext {
         initContextVariables();
     }
 
-    public UserContext(User tester) {
-        currentUser = tester;
+    public UserContext(User user) {
+        currentUser = user;
         initContextVariables();
     }
 
