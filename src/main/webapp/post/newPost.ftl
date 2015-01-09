@@ -3,28 +3,29 @@
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
     <#if model.hasUser()>
+        <#--<div class="page-header">-->
+            <#--<h2>Create new post</h2>-->
+        <#--</div>-->
         <div class="col-md-12">
             <form class="form" role="form" method="POST" action="new" >
                 <div class="page-header">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="newTitle" name="title"
+                        <input type="text" class="form-control" id="title" name="title"
                                placeholder="Post Title">
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea id="newBody" class="form-control final" rows="10" name="body"></textarea>
+                    <textarea id="new-post-body-textarea" class="form-control final" rows="10" name="body"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button id="newSave" type="submit" class="btn btn-primar pull-right" name="saveButton">Save</button>
+                        <button id="save-post-button" type="submit" class="btn btn-primar pull-right" name="saveButton">Save</button>
                         <button type="button" class="btn btn-danger" id="recordButton">
                             Record
                         </button>
                         <button type="button" class="btn btn-danger" id="stopButton">
                             Stop
                         </button>
-                        <h2>capture=camera</h2>
-                        <input type="file" accept="image/*;capture=camera"></input>
                         <p><span class="interim" id="content_curr"></span></p>
                     </div>
                 </div>
@@ -48,10 +49,24 @@
 
         recordButton.onclick = function() {
 
+//            for get location (in future)
+//            if (navigator.geolocation) {
+//                navigator.geolocation.getCurrentPosition(showPosition);
+//            }
+//            else{
+//                console.log('no geo')
+//            }
+//            function showPosition(position) {
+//                console.log(position.coords.latitude);
+//                console.log(position.coords.longitude);
+//            }
+
             var format = webspeechkit.FORMAT.PCM16;
 
             $('#new-post-body-textarea').html('');
             $('#content_curr').html('');
+
+
 
             dict.start(format,
                     function(){},
