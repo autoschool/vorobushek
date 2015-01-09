@@ -96,7 +96,7 @@ public class PostResources {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (postTitle.isEmpty() || postBody.isEmpty()){
+        if (postBody.isEmpty()){
             userContext.setLastShownPost(postId);
             return userContext;
         }
@@ -136,16 +136,17 @@ public class PostResources {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response createPost(@FormParam("title") String postTitle,
-                                @FormParam("body") String postBody) {
+                                @FormParam("body") String postBody,
+                                @FormParam("saveButton") int postVal) {
 
         UserContext userContext = DatabaseProvider.getUserContext(httpRequest);
 
-        if (postTitle.isEmpty() || postBody.isEmpty()){
+        if (postBody.isEmpty()){
             return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
         }
         
         if (userContext.hasUser()){
-            Post post = userContext.createPost(postTitle, postBody);
+            Post post = userContext.createPost(postTitle, postBody, postVal);
             userContext.setLastShownPost(post.getId().toString());
         }
         return javax.ws.rs.core.Response.seeOther(URI.create("/post/" + userContext.getLastShownPost().getId() + "/showComments")).build();

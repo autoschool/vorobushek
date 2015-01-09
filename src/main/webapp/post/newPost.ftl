@@ -3,41 +3,29 @@
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
     <#if model.hasUser()>
-        <div class="page-header">
-            <h2>Create new post</h2>
-        </div>
         <div class="col-md-12">
             <form class="form" role="form" method="POST" action="new" >
                 <div class="page-header">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="title" name="title"
+                        <input type="text" class="form-control" id="newTitle" name="title"
                                placeholder="Post Title">
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea id="new-post-body-textarea" class="form-control final" rows="10" name="body"></textarea>
+                    <textarea id="newBody" class="form-control final" rows="10" name="body"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button id="save-post-button" type="submit" class="btn btn-primar pull-right">Save</button>
-                        <#--<button type="button" id="recordButton" data-loading-text="Recording..." class="btn btn-primary" autocomplete="off">-->
-                            <#--Record-->
-                        <#--</button>-->
+                        <button id="newSave" type="submit" class="btn btn-primar pull-right" name="saveButton">Save</button>
                         <button type="button" class="btn btn-danger" id="recordButton">
                             Record
                         </button>
                         <button type="button" class="btn btn-danger" id="stopButton">
                             Stop
                         </button>
-                        <#--<div class="btn-group" data-toggle="buttons">-->
-                            <#--<label class="btn btn-primary active">-->
-                                <#--<input type="radio" name="rec" id="stopRec" autocomplete="off" checked> Stop-->
-                            <#--</label>-->
-                            <#--<label class="btn btn-primary ">-->
-                                <#--<input type="radio" name="rec" id="startRec" autocomplete="off" > Record-->
-                            <#--</label>-->
-                        <#--</div>-->
-                        <span class="interim" id="content_curr"></span>
+                        <h2>capture=camera</h2>
+                        <input type="file" accept="image/*;capture=camera"></input>
+                        <p><span class="interim" id="content_curr"></span></p>
                     </div>
                 </div>
             </form>
@@ -58,12 +46,13 @@
 
         var dict = new webspeechkit.Dictation("wss://webasr.yandex.net/asrsocket.ws", uuid, key);
 
-
         recordButton.onclick = function() {
-            var format = webspeechkit.FORMAT["PCM16"];
+
+            var format = webspeechkit.FORMAT.PCM16;
 
             $('#new-post-body-textarea').html('');
             $('#content_curr').html('');
+
             dict.start(format,
                     function(){},
                     function(msg) {console.log(msg); alert(msg);},
@@ -75,13 +64,16 @@
 
                         }
                         $('#content_curr').html(text);
-
                     },
-                    function(info) {}
+                    function(info) {
+                        $('#save-post-button').css('backgroundColor','hsla(' + info.maxFreq + ',60%,60%,0.3)');
+                        $('#save-post-button').val(info.maxFreq);
+                    }
             );
         };
 
         stopButton.onclick = dict.stop;
+
     </script>
 
 </div>

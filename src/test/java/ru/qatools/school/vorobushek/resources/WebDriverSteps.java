@@ -1,4 +1,4 @@
-package steps;
+package ru.qatools.school.vorobushek.resources;
 
 import org.openqa.selenium.*;
 import ru.yandex.qatools.allure.annotations.Attachment;
@@ -20,7 +20,8 @@ public class WebDriverSteps {
     private static final String testerLoginURL = "/testlogin/tester/password/tester@test.test";
 
 
-    private static final String newPostButtonId = "new-post-button";
+    private static final String logoutID = "logout";
+    private static final String newPostButtonId = "new-post";
     private static final String titleInputId = "title";
     private static final String newPostBodyTextareaId = "new-post-body-textarea";
     private static final String editBodyTextareaId = "edit-body-textarea";

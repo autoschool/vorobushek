@@ -1,10 +1,9 @@
-package ru.qatools.school.vorobushek.web;
+package ru.qatools.school.vorobushek.resources;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import steps.WebDriverSteps;
 
 
 /**

@@ -57,4 +57,12 @@ public class Post extends Model {
     public User getUser(){
         return this.parent(User.class);
     }
+
+    public int getFreq() {
+        return getInteger("maxFreq");
+    }
+
+    public void setFreq(int freq) {
+        setInteger("maxFreq", freq);
+    }
 }

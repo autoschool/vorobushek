@@ -35,6 +35,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
     private static String YANDEX_SPEECHKIT_KEY = null;
     private static String PROJECT_NUBER_BUILD  = null;
 
+
     private static String DBDRIVER = null;
     private static String DBUSER = null;
     private static String DBPASS = null;
@@ -42,6 +43,8 @@ public class DatabaseProvider implements ContainerRequestFilter {
     private static String USER_CONTEXT_ATTRIBUTE_NAME = null;
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseProvider.class);
     private static String YANDEX_TOKEN_URL = null;
+
+    private static Boolean TESTING_MODE = false;
 
     static {
         Properties prop = new Properties();
@@ -64,6 +67,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
             YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
             YANDEX_SPEECHKIT_KEY = prop.getProperty("yandexSpeechKitKey");
             PROJECT_NUBER_BUILD = prop.getProperty("build.number");
+            TESTING_MODE = Boolean.valueOf(prop.getProperty("testingMode"));
 
             LOGGER.info(format("Starting mysql database with url '%s' ...", DBURL));
             openConnection();
@@ -75,11 +79,6 @@ public class DatabaseProvider implements ContainerRequestFilter {
         }
         
 
-    }
-
-    public static String getProperty(String key, String defaultValue) {
-        final String value = System.getProperty(key);
-        return (value == null) ? defaultValue : value;
     }
 
     private static String getJsonAttribute(String jsonMessage, String attributeName){
@@ -183,6 +182,25 @@ public class DatabaseProvider implements ContainerRequestFilter {
         String displayName = getJsonAttribute(passportJsonString, "display_name");
         String id  =   getJsonAttribute(passportJsonString, "id");
 
+        return getUser(login, email, displayName, id);
+
+    }
+
+    public static UserContext getUserContext(HttpServletRequest httpRequest){
+        UserContext userContext = (UserContext) httpRequest
+                .getSession()
+                .getAttribute(USER_CONTEXT_ATTRIBUTE_NAME);
+
+        if (userContext == null){
+            userContext = new UserContext();
+            setUserContext(httpRequest, userContext);
+        }
+
+        return userContext;
+    }
+
+    public static User getUser(String login, String email, String displayName, String id){
+
         if (login.isEmpty() || email.isEmpty() || displayName.isEmpty()) {
             return null;
         }
@@ -204,19 +222,6 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     }
 
-    public static UserContext getUserContext(HttpServletRequest httpRequest){
-        UserContext userContext = (UserContext) httpRequest
-                .getSession()
-                .getAttribute(USER_CONTEXT_ATTRIBUTE_NAME);
-
-        if (userContext == null){
-            userContext = new UserContext();
-            setUserContext(httpRequest, userContext);
-        }
-
-        return userContext;
-    }
-
     public static void  setUserContext(HttpServletRequest httpRequest, UserContext userContext){
         httpRequest.getSession().setAttribute(USER_CONTEXT_ATTRIBUTE_NAME, userContext);
     }
@@ -226,6 +231,8 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public static String getYandexClientId() { return YANDEX_CLIEND_ID; }
 
     public static String getProjectBuildNumber() { return PROJECT_NUBER_BUILD; }
+
+    public static Boolean isTestingMode() { return TESTING_MODE; }
 
     @Override
     public void filter(ContainerRequestContext requestContext) {

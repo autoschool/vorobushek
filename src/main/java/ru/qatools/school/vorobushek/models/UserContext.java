@@ -35,8 +35,8 @@ public class UserContext {
         initContextVariables();
     }
 
-    public UserContext(User tester) {
-        currentUser = tester;
+    public UserContext(User user) {
+        currentUser = user;
         initContextVariables();
     }
 
@@ -61,7 +61,7 @@ public class UserContext {
         return currentUser;
     }
 
-    public Post createPost(String postTitle, String postBody) {
+    public Post createPost(String postTitle, String postBody, int freq) {
 
         if (currentUser == null){
             throw new NotAuthorizedException(dineAccessMessage);
@@ -71,7 +71,9 @@ public class UserContext {
         post.setTitle(postTitle);
         post.setBody(postBody);
         post.setUser(currentUser);
+        post.setFreq(freq);
         post.saveIt();
+
 
         return post;
     }

@@ -2,19 +2,17 @@
 <#import "../layouts/main.ftl" as layout />
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
-        <div class="page-header">
-            <h2>Edit post</h2>
-        </div>
+
         <div class="col-md-12">
             <form class="form" role="form" method="POST" action="edit">
                 <div class="page-header">
                     <div class="form-group">
-                        <input type="text" id="edit-title-input" class="form-control" id="title" name="title"
+                        <input type="text" id="edit-title-input" class="form-control" id="editTitlePost${model.getLastEditedPost().getId()}" name="title"
                                value="${model.getLastEditedPost().getTitle()}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea id="edit-body-textarea" class="form-control" rows="10" name="body">${model.getLastEditedPost().getBody()}</textarea>
+                    <textarea id="editBodyPost${model.getLastEditedPost().getId()}" class="form-control" rows="10" name="body">${model.getLastEditedPost().getBody()}</textarea>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -25,7 +23,7 @@
                             Stop
                         </button>
                         <span class="interim" id="content_curr"></span>
-                        <button type="submit" id="save-button" class="btn btn-primary pull-right">Save</button>
+                        <button type="submit" id="editSavePost${model.getLastEditedPost().getId()}" class="btn btn-primary pull-right">Save</button>
                     </div>
                 </div>
             </form>
@@ -43,7 +41,7 @@
 
 
             recordButton.onclick = function() {
-                var format = webspeechkit.FORMAT["PCM16"];
+                var format = webspeechkit.FORMAT.PCM16;
 
                 $('#new-post-body-textarea').html('');
                 $('#content_curr').html('');
@@ -58,7 +56,9 @@
                             $('#content_curr').html(text);
 
                         },
-                        function(info) {}
+                        function(info) {
+                            $('#save-button').css('backgroundColor','hsla(' + info.maxFreq + ',60%,60%,0.3)');
+                        }
                 );
             };
 
