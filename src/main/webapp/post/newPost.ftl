@@ -19,7 +19,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button id="save-post-button" type="submit" class="btn btn-primar pull-right" name="saveButton">Save</button>
+                        <button type="button" class="btn btn-primary pull-right" role="button" onclick="location.href='/'">Cancel</button>
+                        <button type="submit" class="btn btn-primar pull-right" name="saveButton" id="save-post-button">Save</button>
                         <button type="button" class="btn btn-danger" id="recordButton">
                             Record
                         </button>
@@ -27,6 +28,7 @@
                             Stop
                         </button>
                         <p><span class="interim" id="content_curr"></span></p>
+
                     </div>
                 </div>
             </form>

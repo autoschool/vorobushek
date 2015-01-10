@@ -1,27 +1,16 @@
-package ru.qatools.school.vorobushek.resources;
+package ru.qatools.school.vorobushek.web;
 
-import net.anthavio.phanbedder.Phanbedder;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import ru.qatools.school.vorobushek.service.DatabaseProvider;
-
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * Created by yurik
- * 23.11.14.
+ * 10.01.15.
  */
-public class ITIndexResourceTest {
+public class Resources {
 
-    private static HashMap<String,List<String>> TestUser;
+    public static HashMap<String,List<String>> TestUser;
 
     static
     {
@@ -42,13 +31,13 @@ public class ITIndexResourceTest {
         TestUser.put("FyodorDostoyevsky"
                 , Arrays.asList(
                 "Хозяин земли Русской ­ есть один лишь Русский, так было и всегда будет."
-                ));
+        ));
 
         TestUser.put("MikhailBulgakov"
                 , Arrays.asList(
                 "... никогда и ничего не просите! Никогда и ничего, и в особенности у тех, " +
-                "кто сильнее вас. Сами предложат и сами всё дадут! " +
-                "(Воланд) (Из романа «Мастер и Маргарита»)"
+                        "кто сильнее вас. Сами предложат и сами всё дадут! " +
+                        "(Воланд) (Из романа «Мастер и Маргарита»)"
                 ,"... он не был многословен на этот раз. Единственное, что он сказал, это, " +
                 "что в числе человеческих пороков одним из самых главных он считает трусость. " +
                 "(Афраний, об Иешуа) (Из романа «Мастер и Маргарита»)"
@@ -63,7 +52,7 @@ public class ITIndexResourceTest {
         TestUser.put("AlexanderPushkin"
                 , Arrays.asList(
                 "Кто жил и мыслил, тот не может в душе не презирать людей " +
-                 "(Евгений Онегин. Роман в стихах)"
+                        "(Евгений Онегин. Роман в стихах)"
                 ,"Под старость жизнь такая гадость…"
                 ,"прощай, и если навсегда, то навсегда прощай. (Байрон)"
                 ,"Он чином от ума избавлен."
@@ -79,30 +68,5 @@ public class ITIndexResourceTest {
                 ,"Исключения только подтверждают правила."
         ));
 
-    }
-
-    private PhantomJSDriver driver;
-
-    private String baseUrl = "http://localhost:8080";
-
-    @Before
-    public void openHomePage() {
-        File phantomjs = Phanbedder.unpack();
-        DesiredCapabilities dcaps = new DesiredCapabilities();
-        dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, phantomjs.getAbsolutePath());
-        driver = new PhantomJSDriver(dcaps);
-
-
-    }
-
-    @Test
-    public void test() {
-
-        driver.get(baseUrl);
-
-        final String hello = driver.getPageSource();
-        DatabaseProvider.getLogger().info(hello);
-
-        DatabaseProvider.getLogger().info("TEST INDEX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }

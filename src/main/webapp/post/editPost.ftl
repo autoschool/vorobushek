@@ -2,9 +2,6 @@
 <#import "../layouts/main.ftl" as layout />
 <@layout.layout title="Blog: posts" userName=model.getCurrentUserString() yandexLoginUrl=model.getUserUrl()>
 <div class="row">
-        <#--<div class="page-header">-->
-            <#--<h2>Edit post</h2>-->
-        <#--</div>-->
         <div class="col-md-12">
             <form class="form" role="form" method="POST" action="edit">
                 <div class="page-header">
@@ -18,6 +15,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                        <button type="button" class="btn btn-primary pull-right" role="button" onclick="location.href='/'">Cancel</button>
+                        <button type="submit" class="btn btn-primar pull-right" name="saveButton" id="save-post-button">Save</button>
                         <button type="button" class="btn btn-danger" id="recordButton">
                             Record
                         </button>
@@ -25,7 +24,6 @@
                             Stop
                         </button>
                         <span class="interim" id="content_curr"></span>
-                        <button type="submit" id="save-button" class="btn btn-primary pull-right">Save</button>
                     </div>
                 </div>
             </form>

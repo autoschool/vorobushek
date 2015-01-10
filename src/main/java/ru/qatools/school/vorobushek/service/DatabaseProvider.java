@@ -140,6 +140,7 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public static void openConnection() {
         if (!Base.hasConnection()) {
             Base.open(DBDRIVER, DBURL, DBUSER, DBPASS);
+            Base.exec("SET SQL_SAFE_UPDATES = 0;"); //for triggers
         }
     }
 
