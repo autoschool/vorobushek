@@ -72,30 +72,6 @@ public class IndexResource {
 
     }
 
-//    @GET
-//    @Path("/testlogin/{login}/{password}/{email}")
-//    public Response showTestLogin(@PathParam("login") String login
-//            , @PathParam("password") String password
-//            , @PathParam("email") String email) {
-//
-//        User tester = new User();
-//
-//        LazyList<User> users = User.findBySQL(format(
-//                "select * from users where login='%s' and email='%s' and displayName='%s'", login, email, login));
-//
-//        if (!users.isEmpty()) {
-//            tester = users.get(0);
-//        }
-//
-//        tester.setLogin(login);
-//        tester.setEmail(email);
-//        tester.setDisplayName(login);
-//        tester.saveIt();
-//        DatabaseProvider.setUserContext(httpRequest, new UserContext(tester));
-//
-//        return javax.ws.rs.core.Response.seeOther(URI.create("/")).build();
-//    }
-
 
     @GET
     @Path("/logout")
