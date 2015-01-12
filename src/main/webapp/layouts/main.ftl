@@ -42,8 +42,9 @@
                 <#if model.hasUser()>
                     <li><a href="/post/new" id="new-post-link">New post</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="user-name">
-                            <span class="glyphicon glyphicon-user"/> ${userName}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                            <span class="glyphicon glyphicon-user"/>
+                            <span id="user-name">${userName}</span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a id="user-profile" href=${yandexLoginUrl}>Profile</a></li>

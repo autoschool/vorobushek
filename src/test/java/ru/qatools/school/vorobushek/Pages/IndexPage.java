@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import ru.qatools.school.vorobushek.Elements.PostItem;
 import ru.qatools.school.vorobushek.models.Post;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
+import ru.yandex.qatools.htmlelements.element.HtmlElement;
 import ru.yandex.qatools.htmlelements.element.Link;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 
@@ -22,18 +23,14 @@ public class IndexPage {
     private WebDriver driver;
 
 
-    @FindBy(className = "well")
+    @FindBy(className = "postBody")
     private List<WebElement> postItems;
 
-//    @FindBy(id = "new-post-link")
-//    private Link newPostLink;
-
-
     @FindBy(id = "user-name")
-    private Link userLink;
+    private WebElement userLink;
 
     @FindBy(id = "logout")
-    private Link logoutLink;
+    private HtmlElement logoutLink;
 
     public IndexPage(WebDriver webDriver){
         this.driver = webDriver;
@@ -46,8 +43,6 @@ public class IndexPage {
     }
 
     public String getCurrentUserName(){
-        DatabaseProvider.getLogger().info("Current user:" + userLink.getText());
-        DatabaseProvider.getLogger().info("Wrapped Elements:" + userLink.getWrappedElement().toString());
         return userLink.getText();
     }
 
@@ -58,7 +53,7 @@ public class IndexPage {
 
         try {
             WebElement link = driver.findElement(By.id("sign-in"));
-            hasSignInLink = link == null;
+            hasSignInLink = link != null;
         }
         catch (Exception e){
             DatabaseProvider.getLogger().error("Cannot find signIn link. It means that user have login to site", e.getMessage());
@@ -76,7 +71,7 @@ public class IndexPage {
 
         for (WebElement postItem: postItems){
 
-            String currentId  = postItem.getAttribute("id").replace("post-","");
+            String currentId  = postItem.getAttribute("id").replace("body-","");
 
             Post post = Post.findById(currentId);
 
@@ -84,7 +79,6 @@ public class IndexPage {
 
             PostItems.add(new PostItem(post, driver));
 
-            DatabaseProvider.getLogger().info(post.getBody());
         }
 
         return PostItems;

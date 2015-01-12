@@ -5,6 +5,8 @@ import net.anthavio.phanbedder.Phanbedder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
@@ -41,7 +43,10 @@ public class ITindexTest {
         DesiredCapabilities dcaps = new DesiredCapabilities();
         dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, phantomjs.getAbsolutePath());
 
+
         driver = new PhantomJSDriver(dcaps);
+        driver.manage().window().setPosition(new Point(0,0));
+        driver.manage().window().setSize(new Dimension(1200,800));
 
         DatabaseProvider.openConnection();
 
@@ -57,10 +62,10 @@ public class ITindexTest {
     @Test
     public void testIndexPage(){
         open();
-        //checkUserName();
+        checkUserName();
         checkCountPosts();
-        //logout();
-        //checkLogout();
+        logout();
+        checkLogout();
     }
 
     @Step("Open homepage.")
@@ -75,8 +80,7 @@ public class ITindexTest {
 
     @Step("Check user name.")
     public void checkUserName(){
-        index.getCurrentUserName();
-        //assertThat(index.getCurrentUserName().contains(USER_NAME), is(true));
+        assertThat(index.getCurrentUserName().contains(USER_NAME), is(true));
     }
 
     @Step("Logout.")
