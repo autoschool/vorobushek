@@ -27,6 +27,7 @@ import static org.junit.Assert.assertThat;
 public class ITTest {
 
     private static final String USER_NAME = "IvanGoncharov";
+    private static final String BASE_ADDRES="http://localhost:9183";
 
     private IndexPage index;
     private NewPost newPost;
@@ -52,7 +53,7 @@ public class ITTest {
 
     @Step("Open homepage.")
     public void openIndex() {
-        driver.get("http://localhost:9183/login?code="+USER_NAME);
+        driver.get(BASE_ADDRES+ "/login?code="+USER_NAME);
         index = new IndexPage(driver);
     }
 
@@ -78,8 +79,8 @@ public class ITTest {
 
     @Step("Open create post.")
     public void openCreatePost(){
-        driver.get("http://localhost:9183/login?code="+USER_NAME);
-        driver.get("http://localhost:9183/post/new");
+        driver.get(BASE_ADDRES+"/login?code="+USER_NAME);
+        driver.get(BASE_ADDRES+"/post/new");
         newPost = new NewPost(driver);
     }
 
