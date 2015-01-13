@@ -1,6 +1,5 @@
 package ru.qatools.school.vorobushek.web;
 
-import com.sun.jndi.url.iiop.iiopURLContext;
 import net.anthavio.phanbedder.Phanbedder;
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +11,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.qatools.school.vorobushek.Pages.IndexPage;
+import ru.qatools.school.vorobushek.Pages.NewPost;
 import ru.qatools.school.vorobushek.service.DatabaseProvider;
 import ru.yandex.qatools.allure.annotations.Step;
 
@@ -24,15 +24,14 @@ import static org.junit.Assert.assertThat;
  * Created by yurik
  * 10.01.15.
  */
-public class ITindexTest {
+public class ITTest {
 
     private static final String USER_NAME = "IvanGoncharov";
 
     private IndexPage index;
+    private NewPost newPost;
 
     public WebDriver driver;
-
-
 
     @Before
     public void loadStartPage() {
@@ -49,27 +48,11 @@ public class ITindexTest {
         driver.manage().window().setSize(new Dimension(1200,800));
 
         DatabaseProvider.openConnection();
-
-        try {
-            driver.get("http://localhost:8080/login?code="+USER_NAME);
-
-        }
-        catch (Exception e){
-            DatabaseProvider.getLogger().error("Cant get home link", e.getMessage());
-        }
-    }
-
-    @Test
-    public void testIndexPage(){
-        open();
-        checkUserName();
-        checkCountPosts();
-        logout();
-        checkLogout();
     }
 
     @Step("Open homepage.")
-    public void open() {
+    public void openIndex() {
+        driver.get("http://localhost:9183/login?code="+USER_NAME);
         index = new IndexPage(driver);
     }
 
@@ -93,10 +76,38 @@ public class ITindexTest {
         assertThat(index.isSignIn(), is(false));
     }
 
+    @Step("Open create post.")
+    public void openCreatePost(){
+        driver.get("http://localhost:9183/login?code="+USER_NAME);
+        driver.get("http://localhost:9183/post/new");
+        newPost = new NewPost(driver);
+    }
+
+    @Step("Create post")
+    public void createPost(){
+        newPost.setTitle("test post title");
+        newPost.setBody("test post body");
+        newPost.savePost();
+    }
+
     @After
     public void killWebDriver() {
         driver.quit();
     }
 
+    @Test
+    public void testIndexPage(){
+        openIndex();
+        checkUserName();
+        checkCountPosts();
+        logout();
+        checkLogout();
+    }
+
+    @Test
+    public void testCreatePost(){
+//        openCreatePost();
+//        createPost();
+    }
 
 }
