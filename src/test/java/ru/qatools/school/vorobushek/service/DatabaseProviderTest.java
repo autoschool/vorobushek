@@ -16,7 +16,6 @@ public class DatabaseProviderTest extends TestCase  {
     }
 
     public void testGetLogger() throws Exception {
-
-        DatabaseProvider.getLogger().info("TEST LOGGER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        DatabaseProvider.openConnection();
     }
 }
