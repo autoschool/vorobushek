@@ -165,7 +165,9 @@ public class UserContext {
         return currentProjectVersion;
     }
 
-    public String getYandexSpeechKitKey() { return yandexSpeechKitKey; }
+    public String getYandexSpeechKitKey() {
+        return yandexSpeechKitKey;
+    }
     
     public User getUser() {
         return currentUser;

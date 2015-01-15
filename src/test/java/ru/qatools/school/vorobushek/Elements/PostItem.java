@@ -12,7 +12,7 @@ import ru.yandex.qatools.htmlelements.element.TextBlock;
  * 10.01.15.
  * Created by yurik
  */
-public class PostItem extends HtmlElement {
+public class PostItem {
 
     private WebDriver driver;
 
@@ -28,9 +28,9 @@ public class PostItem extends HtmlElement {
         return (Button) driver.findElement(By.id(elementId));
     }
 
-    private TextBlock getBody(){
+    public String getBody(){
         String elementId = "body-"+post.getId().toString();
-        return (TextBlock)driver.findElement(By.id(elementId));
+        return driver.findElement(By.id(elementId)).getText();
     }
 
     public PostItem(Post post, WebDriver driver){
@@ -38,12 +38,11 @@ public class PostItem extends HtmlElement {
         this.driver = driver;
     }
 
-    public String getBodyText(){
-        return getBody().getText();
-    }
-
     public void Delete(){
-        getDeleteButton().click();
+        String elementId = "delete-button-"+post.getId().toString();
+        driver.findElement(By.id(elementId)).click();
+
+        //getDeleteButton().click();
     }
 
     public void Edit(){

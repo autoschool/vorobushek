@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea id="new-post-body-textarea" class="form-control final" rows="10" name="body"></textarea>
+                    <textarea id="body" class="form-control final" rows="10" name="body"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -65,14 +65,12 @@
 
             var format = webspeechkit.FORMAT.PCM16;
 
-            $('#new-post-body-textarea').html('');
+            $('#body').html('');
             $('#content_curr').html('');
-
-
 
             dict.start(format,
                     function(){},
-                    function(msg) {console.log(msg); alert(msg);},
+                    function(msg) { console.log(msg); alert(msg); },
                     function(text, uttr, merge) {
                         if (uttr) {
 

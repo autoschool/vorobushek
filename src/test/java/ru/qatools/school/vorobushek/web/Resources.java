@@ -3,6 +3,7 @@ package ru.qatools.school.vorobushek.web;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by yurik
@@ -68,5 +69,17 @@ public class Resources {
                 ,"Исключения только подтверждают правила."
         ));
 
+    }
+
+    public static String getRandomMessage(String user){
+        Random rand = new Random();
+
+        int randomNum =
+                rand.nextInt(TestUser.get(user).size() + 1);
+
+        if (randomNum > TestUser.get(user).size())
+            randomNum = TestUser.get(user).size();
+
+        return TestUser.get(user).get(randomNum);
     }
 }

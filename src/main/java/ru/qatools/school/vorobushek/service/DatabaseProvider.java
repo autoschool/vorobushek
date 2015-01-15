@@ -46,28 +46,18 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     private static Boolean TESTING_MODE = false;
 
+
     static {
-        Properties prop = new Properties();
-
-        try(InputStream inputStream = DatabaseProvider.class.getResourceAsStream("/application.properties")) {
-            prop.load(inputStream);
-        }
-        catch ( IOException e ) {
-            LOGGER.error( e.getMessage(), e );
-        }
-
         try {
             YANDEX_TOKEN_URL = "http://oauth.yandex.ru/token";
             USER_CONTEXT_ATTRIBUTE_NAME = "userContext";
-            DBURL = prop.getProperty("dbUrl");
-            DBUSER = prop.getProperty("dbUser");
-            DBPASS = prop.getProperty("dbPass");
-            DBDRIVER = prop.getProperty("dbDriver");
-            YANDEX_CLIEND_ID = prop.getProperty("yandexCliendId");
-            YANDEX_CLIEND_SECRET = prop.getProperty("yandexCliendSecret");
-            YANDEX_SPEECHKIT_KEY = prop.getProperty("yandexSpeechKitKey");
-            PROJECT_NUBER_BUILD = prop.getProperty("build.number");
-            TESTING_MODE = Boolean.valueOf(prop.getProperty("testingMode"));
+            DBURL = format("jdbc:h2:mem:%s/%s,user=%s", getDbPath(), getDbName(), DBUSER);
+            DBUSER = "sa";
+            DBPASS = "";
+            DBDRIVER = org.h2.Driver.class.getName();
+            PROJECT_NUBER_BUILD = "testBuild";
+            YANDEX_SPEECHKIT_KEY = "testKey";
+            TESTING_MODE = true;
 
             LOGGER.info(format("Starting mysql database with url '%s' ...", DBURL));
             openConnection();
@@ -76,9 +66,22 @@ public class DatabaseProvider implements ContainerRequestFilter {
             flyway.migrate();
         } catch (Exception e) {
             LOGGER.error("Failed to start embedded database", e);
+            System.exit(-1);
         }
-        
 
+    }
+
+    private static String getDbName() {
+        return getProperty("db.name", "default");
+    }
+
+    private static String getDbPath() throws IOException {
+        return getProperty("db.path", createTempDirectory("blog").toAbsolutePath().toString());
+    }
+
+    private static String getProperty(String key, String defaultValue) {
+        final String value = System.getProperty(key);
+        return (value == null) ? defaultValue : value;
     }
 
     private static String getJsonAttribute(String jsonMessage, String attributeName){
@@ -140,7 +143,6 @@ public class DatabaseProvider implements ContainerRequestFilter {
     public static void openConnection() {
         if (!Base.hasConnection()) {
             Base.open(DBDRIVER, DBURL, DBUSER, DBPASS);
-            Base.exec("SET SQL_SAFE_UPDATES = 0;"); //for triggers
         }
     }
 
