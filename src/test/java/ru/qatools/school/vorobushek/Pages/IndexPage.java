@@ -20,8 +20,10 @@ import java.util.List;
  * 10.01.15.
  */
 public class IndexPage {
-    private WebDriver driver;
 
+    private static final String BASE_ADDRESS="http://localhost:9183";
+
+    private WebDriver driver;
 
     @FindBy(className = "postBody")
     private List<WebElement> postItems;
@@ -35,6 +37,10 @@ public class IndexPage {
     public IndexPage(WebDriver webDriver){
         this.driver = webDriver;
         PageFactory.initElements(new HtmlElementDecorator(webDriver), this);
+    }
+
+    public void login(String user){
+        driver.get(BASE_ADDRESS + "/login?code="+user);
     }
 
     public void logout(){
@@ -59,8 +65,6 @@ public class IndexPage {
             DatabaseProvider.getLogger().error("Cannot find signIn link. It means that user have login to site", e.getMessage());
         }
 
-//        DatabaseProvider.getLogger().info(driver.getPageSource());
-
         return !hasSignInLink;
     }
 
@@ -84,4 +88,7 @@ public class IndexPage {
         return PostItems;
     }
 
+    public static String getBaseAddres(){
+        return BASE_ADDRESS;
+    }
 }
