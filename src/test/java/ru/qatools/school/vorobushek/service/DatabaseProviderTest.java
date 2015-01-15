@@ -15,8 +15,12 @@ public class DatabaseProviderTest extends TestCase  {
         new Server();
     }
 
-    public void testGetLogger() throws Exception {
+    public void testDbConnection() throws Exception {
 
-        DatabaseProvider.getLogger().info("TEST LOGGER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        DatabaseProvider.getLogger().info("Database user: " + DatabaseProvider.getDBUSER());
+        DatabaseProvider.getLogger().info("Database pass: " + DatabaseProvider.getDBPASS());
+        DatabaseProvider.getLogger().info("Database url: " + DatabaseProvider.getDBURL());
+
+        DatabaseProvider.openConnection();
     }
 }

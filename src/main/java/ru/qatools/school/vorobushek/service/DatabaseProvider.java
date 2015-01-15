@@ -235,6 +235,12 @@ public class DatabaseProvider implements ContainerRequestFilter {
 
     public static Boolean isTestingMode() { return TESTING_MODE; }
 
+    public static String getDBUSER() { return DBUSER; }
+
+    public static String getDBPASS() { return DBPASS; }
+
+    public static String getDBURL() { return DBURL; }
+
     @Override
     public void filter(ContainerRequestContext requestContext) {
         openConnection();
