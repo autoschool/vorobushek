@@ -35,7 +35,7 @@ public class UserContextTest extends TestCase {
     @Step("Create user")
     public void createUser() {
         String login = "testUser";
-        String email = login  "@yandex.ru";
+        String email = login + "@yandex.ru";
         String displayName = login.toUpperCase();
         String id = "0";
         testUser = DatabaseProvider.getUser(login, email, displayName, id);
