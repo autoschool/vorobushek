@@ -9,6 +9,8 @@
 		<meta name="description" content="Presentation for yandex autoschool">
 		<meta name="author" content="Sidelnikov Yurii">
 
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -17,7 +19,8 @@
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
 
-		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <link rel="stylesheet" type="text/css" href="http://cdn.knightlab.com/libs/timeline/latest/css/timeline.css">
+
 		<script>
 			if( window.location.search.match( /print-pdf/gi ) ) {
 				var link = document.createElement( 'link' );
@@ -63,24 +66,159 @@
                     </ul>
                 </section>
                 <section>
+                    <div id="timeline-embed"></div>
+                    <script type="text/javascript">
+                        storyjs_json_data = {
+                            "timeline":
+                            {
+                                "headline":"История проекта Vorobushek",
+                                "type":"default",
+                                "text":"<p>Как мы учились</p>",
+                                "asset": {
+                                    "media":"lib/img/sparrow.png"
+                                },
+                                "date": [
+                                    {
+                                        "startDate":"2014,10,16",
+                                        "headline":"Первое занятие",
+                                        "asset":
+                                        {
+                                            "media":"http://company.yandex.com/i/yandex_eng_logo-240.png",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2014,11,11",
+                                        "headline":"Получение задания",
+                                        "asset":
+                                        {
+                                            "media":"http://s2.hubimg.com/u/7168847_f520.jpg",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2014,11,15",
+                                        "headline":"Switter",
+                                        "asset":
+                                        {
+                                            "media":"https://raw.githubusercontent.com/autoschool/switter/master/src/main/webapp/public/app/img/switter.png",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2014,11,21",
+                                        "headline":"Первая версия проекта",
+                                        "asset":
+                                        {
+                                            "media":"http://upload.wikimedia.org/wikipedia/ru/4/4c/Robert_Downey_Jr_as_Tony_Stark.jpg",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2014,12,07",
+                                        "headline":"Редизаин интерфейса",
+                                        "asset":
+                                        {
+                                            "media":"http://files2.coloribus.com/files/adsarchive/part_1251/12517255/file/redesign-redesign-small-59201.jpg",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2014,12,07",
+                                        "endDate":"2014,12,31",
+                                        "headline":"Программирование",
+                                        "asset":
+                                        {
+                                            "media":"http://jontai.me/presentations/2012/07/code-foo-git-intro/assets/images/programming.gif",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2015,01,07",
+                                        "headline":"Добавление тестов",
+                                        "asset":
+                                        {
+                                            "media":"http://habrastorage.org/storage2/d2f/a3d/79d/d2fa3d79dfe1eaabce68c31520b3cc12.jpg",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    },
+                                    {
+                                        "startDate":"2015,01,27",
+                                        "headline":"Защита",
+                                        "asset":
+                                        {
+                                            "media":"http://1.bp.blogspot.com/-__a8AeP7KfU/UjkPTerYO0I/AAAAAAAA1eY/to_mfg4IE8I/s640/funny-and-its-gone-study-time-meme.jpg",
+                                            "credit":"",
+                                            "caption":""
+                                        }
+                                    }
+
+                                ]
+                            }
+                        }
+
+                        var timeline_config = {
+                            width:              '100%',
+                            height:             '700',
+                            source:             storyjs_json_data,
+                            embed_id:           'timeline-embed',
+                            debug:              true
+                        }
+                    </script>
+                    <script type="text/javascript" src="js/storyjs-embed.js"></script>
+                </section>
+                <section>
+                    <iframe src="http://ghv.artzub.com/#repo=vorobushek&climit=100&user=autoschool" height="600" width="1600"></iframe>
+                </section>
+                <section>
                     <section>
-                        <h1>Технологии</h1>
+                        <h2>Инфраструктура</h2>
                     </section>
                     <section>
-                        <p><img src="http://git-scm.com/images/logo@2x.png"><p>
-                        <p><a href="http://git-scm.com">Git</a>: распределённая система управления версиями файлов</p>
-
+                        <p><img src="http://company.yandex.com/i/yandex_eng_logo-240.png"><p>
+                        <p><a href="https://tech.yandex.ru/oauth">Yandex OAuth</a>: для индентификации пользователей на сайте и распознования речи</p>
+                    </section>
+                    <section>
                         <p><img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png"><p>
                         <p><a href="https://github.com">Github</a>: самый крупный веб-сервис для хостинга IT-проектов и их совместной разработки</p>
-                    </section>
-                    <section>
-                        <p><img src="http://maven.apache.org/images/apache-maven-project.png" style="zoom: 2"><p>
-                        <p><a href="http://maven.apache.org">Maven</a>: инструмент для сборки Java проекта</p>
                     </section>
                     <section>
                         <p><img src="http://www.mysql.com/common/logos/logo-mysql-170x115.png" ><p>
                         <p><a href="http://www.mysql.com">Mysql</a>: СУБД</p>
                     </section>
+                    <section>
+                        <p><img src="http://cdn2.crunchify.com/wp-content/uploads/2012/11/apache-tomcat-crunchify.png" ><p>
+                        <p><a href="http://tomcat.apache.org/">Tomcat</a>: web сервер</p>
+                    </section>
+                    <section>
+                        <p><img src="https://www.cloudbees.com/sites/default/files/headshot.png" ><p>
+                        <p><a href="http://www.mysql.com">Jenkins</a>: автоматизация </p>
+                    </section>
+                    <section>
+                        <p><img src="http://media.xircles.codehaus.org/_projects/sonar/_logos/monstrous.png" ><p>
+                        <p><a href="http://www.sonarqube.org/">Sonar</a>: статический анализ кода </p>
+                    </section>
+                    <section>
+                        <p><img src="http://habrastorage.org/getpro/habr/post_images/6a1/b01/d77/6a1b01d773bd770f01ac7e0b01078d75.png" ><p>
+                        <p><a href="https://www.digitalocean.com/">DigitalOcean</a>: для Docker </p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Технологии</h2>
+                    </section>
+                    <section>
+                        <p><img src="http://maven.apache.org/images/apache-maven-project.png" style="zoom: 2"><p>
+                        <p><a href="http://maven.apache.org">Maven</a>: инструмент для сборки Java проекта</p>
+                    </section>
+
                     <section>
                         <p><img src="http://flywaydb.org/assets/logo/flyway-logo-tm.png"><p>
                         <p><a href="http://flywaydb.org">Flyway</a>: средство управления миграциями баз данных</p>
@@ -101,35 +239,25 @@
                         <p><img src="http://getbootstrap.com/assets/brand/bootstrap-solid.svg" width="100" height="100"><p>
                         <p><a href="http://getbootstrap.com">Bootstrap</a>: свободный набор инструментов для создания сайтов и веб-приложений</p>
                     </section>
-                    <section>
-                        <p><img src="http://company.yandex.com/i/yandex_eng_logo-240.png"><p>
-                        <p><a href="https://tech.yandex.ru/oauth">Yandex OAuth</a>: для индентификации пользователей на сайте</p>
-                    </section>
+
                     <section>
                         <p><img src="http://img-fotki.yandex.ru/get/17859/222141741.1/0_de1f6_5801ccb6_orig.png"><p>
                         <p><a href="https://tech.yandex.ru/speechkit/cloud">Yandex SpeechKit Cloud</a>: для распознования речи</p>
                     </section>
                 </section>
                 <section>
-                    <section>
-                        <h1>Итоги</h1>
-                    </section>
-                    <section>
-                        <h2><a href="http://ghv.artzub.com/#repo=vorobushek&climit=100&user=autoschool">История коммитов</a></h2>
-                    </section>
-                    <section>
-                        <h2><a href="http://testing.vorobushek.school.qatools.ru">Демострация</a></h2>
-                    </section>
+                    <h2><a href="http://testing.vorobushek.school.qatools.ru">Демострация</a></h2>
                 </section>
                 <section>
-                    <h1>Конец</h1>
+                    <img src="http://thearcofdelco.org/wp-content/uploads/2014/02/Thank_You_note_calligraphy.png">
                 </section>
             </div>
         </div>
 
-		<script src="js/reveal.min.js"></script>
+		<script type="text/javascript" src="js/reveal.min.js"></script>
 
 		<script>
+
 
 			Reveal.initialize({
 				controls: true,
@@ -141,10 +269,10 @@
 
 				theme: Reveal.getQueryHash().theme,
 				transition: Reveal.getQueryHash().transition || 'concave' // default/cube/page/concave/zoom/linear/fade/none
-                              
+
 			});
 
-		</script>
+        </script>
 
 	</body>
 </html>
