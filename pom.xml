@@ -187,6 +187,12 @@
                         <exclude>**/*ITCase.java</exclude>
                         <exclude>**/IntegrationTest*.java</exclude>
                     </excludes>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
+                        </property>
+                    </properties>
                 </configuration>
             </plugin>
             <plugin>
