@@ -5352,11 +5352,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			switch(e.keyCode) {
 				case 39:
 					// RIGHT ARROW
-					onNextClick(e);
+					//onNextClick(e);
 					break;
 				case 37:
 					// LEFT ARROW
-					onPrevClick(e);
+					//onPrevClick(e);
 					break;
 			}
 		}
