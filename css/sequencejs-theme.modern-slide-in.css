@@ -151,7 +151,7 @@ table {
     height: 140px; }
     .sequence-pagination li img {
       cursor: pointer;
-      opacity: 0.1;
+      opacity: 0.6;
       -webkit-transition-duration: 1s;
       -moz-transition-duration: 1s;
       -ms-transition-duration: 1s;
