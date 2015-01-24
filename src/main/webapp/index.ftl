@@ -5,7 +5,7 @@
 <div class="list-group">
     <#list model.getPosts() as post>
 
-        <div class="well" id="post-${post.id}">
+        <div class="well" id="post-${post.id}"  >
 
             <#if post.getCanEdit()>
 
@@ -17,7 +17,7 @@
 
             </#if>
 
-            <a class="list-group-item well" href="/post/${post.id}/showComments" style="background-color: hsla(${post.getFreq()},60%,60%,0.3)}">
+            <a class="list-group-item well" href="/post/${post.id}/showComments" style="background-color: hsla(${post.getFreq()},60%,60%,0.5)}">
                 <img src="${post.user.avater}" class="img-circle img-responsive center-block" alt="Responsive image">
 
                 <blockquote class="blockquote-reverse">

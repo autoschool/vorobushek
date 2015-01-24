@@ -16,7 +16,7 @@
     <script src="/public/ysk/js/dictation.js" type="text/javascript"></script>
 
 </head>
-<body style="background: url(/public/app/img/background.jpg); padding-top: 70px;">
+<body style="background-color: #fdffe2; padding-top: 70px;">
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
