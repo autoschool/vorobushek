@@ -77,8 +77,8 @@ public class Resources {
         int randomNum =
                 rand.nextInt(TestUser.get(user).size() + 1);
 
-        if (randomNum > TestUser.get(user).size())
-            randomNum = TestUser.get(user).size();
+        if (randomNum > TestUser.get(user).size() - 1)
+            randomNum = TestUser.get(user).size() - 1;
 
         return TestUser.get(user).get(randomNum);
     }
