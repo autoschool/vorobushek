@@ -92,7 +92,7 @@ public class UserContextTest extends TestCase {
     @Step("Delete post")
     public void deletePost() {
         testPost.delete();
-        LazyList<Post> posts = Post.findBySQL("select * from posts");
+        LazyList<Post> posts = Post.find("title=? and body=?", "updatedTestTitle","Updated test body");
         assertThat(posts.isEmpty(),is(true));
     }
 
