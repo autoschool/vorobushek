@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
  * Created by Sergey on 14.01.2015.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserContextTest extends TestCase {
+public class UserContextTest {
 
     static private User testUser;
     static private UserContext testUserContext;
