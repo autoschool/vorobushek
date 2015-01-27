@@ -99,6 +99,8 @@ public class UserContextTest {
     @Step("Delete user")
     public void deleteUser() {
         testUser.delete();
+        LazyList<User> users = User.find("login=? and email=?", "testUser","testUser@yandex.ru");
+        assertThat(users.isEmpty(),is(true));
     }
 
     @Test
