@@ -32,11 +32,11 @@
  {
     return function(bufferSize, channelCount, onError, workerPath, outSampleRate)
     {
-        var backref = this;
+//        var backref = this;
         this.bufferLen = 8192;//4096;//bufferSize || 4096;
         this.channelCount = 1;//Math.max(1, Math.min(channelCount || 2, 2)); // 1 or 2, defaults to 2
         this.context = new AudioContext();
-        this.outSampleRate = outSampleRate || this.context.sampleRate
+//        this.outSampleRate = outSampleRate || this.context.sampleRate
 
 //        if (this.outSampleRate == this.context.sampleRate)
 //            this.inputPoint = this.context.createGain();
@@ -94,12 +94,17 @@
             var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
             analyserNode.getByteFrequencyData(freqByteData);
 
-            for(var i = 0; i < freqByteData.length; i++){
+            for(var i = freqByteData.length; i > maxFreq; i--){
                 if(freqByteData[i]>0 && i>maxFreq)
                     maxFreq = i;
             }
 
-//            console.log(maxFreq);
+//            for(var i = maxFreq; i < freqByteData.length; i++){
+//                if(freqByteData[i]>0 && i>maxFreq)
+//                    maxFreq = i;
+//            }
+
+            console.log(maxFreq);
         }
 
         this.getMaxFreq = function(){
